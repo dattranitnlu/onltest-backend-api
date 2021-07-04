@@ -4,6 +4,8 @@ import vn.onltest.entity.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import vn.onltest.exception.ServiceException;
+import vn.onltest.exception.movie.NotFoundException;
+import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.request.AbstractUserRequest;
 import vn.onltest.repository.RoleRepository;
 import vn.onltest.repository.UserRepository;
@@ -11,10 +13,7 @@ import vn.onltest.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(AbstractUserRequest userRequest) {
         User localUser = userRepository.findByEmail(userRequest.getEmail());
-        if(localUser != null) {
+        if (localUser != null) {
             throw new ServiceException("Email " + localUser.getEmail() + " already exists. Nothing will be done!");
         } else {
             String salt = BCrypt.gensalt();
@@ -88,6 +87,35 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmailAndStatus(email, status)
                 .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
+    }
+
+    @Override
+    public UserInfoSummary findUserInfoSummary(String username,
+                                               Collection<Role> roles,
+                                               int status,
+                                               int isDeleted) {
+
+        Collection<UserInfoSummary> userInfoSummaries = userRepository.findByUsernameAndRolesInAndStatusAndIsDeleted(
+                username,
+                roles,
+                status,
+                isDeleted
+        );
+        if(userInfoSummaries.size() == 1) {
+            Iterator<UserInfoSummary> iterable = userInfoSummaries.stream().iterator();
+            return iterable.next();
+        } else {
+            throw new NotFoundException("Not found username " + username);
+        }
+    }
+
+    @Override
+    public Collection<Role> getListRoles(List<ERole> roles) {
+        if(roles.isEmpty()) {
+            throw new ServiceException("List role need to be got equal is 0");
+        } else {
+            return roleRepository.findRolesByNameIn(roles);
+        }
     }
 }
 

@@ -89,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers(HttpMethod.POST, "/api/v1/login")
+        webSecurity.ignoring().antMatchers(HttpMethod.POST, "/api/v1/login/**")
                 .antMatchers(HttpMethod.OPTIONS, "/client/**", "api/v1/users/**");
     }
 }

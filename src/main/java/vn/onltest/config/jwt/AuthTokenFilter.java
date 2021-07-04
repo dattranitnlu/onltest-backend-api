@@ -21,7 +21,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
-    public AuthTokenFilter(JwtUtils jwtUtils, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public AuthTokenFilter(JwtUtils jwtUtils,
+                           @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
     }

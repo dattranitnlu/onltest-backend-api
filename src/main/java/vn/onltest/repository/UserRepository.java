@@ -1,9 +1,11 @@
 package vn.onltest.repository;
 
+import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import vn.onltest.model.projection.UserInfoSummary;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -12,13 +14,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value = "SELECT u FROM Users u WHERE u.username = ?1 and u.status = ?2")
-    Optional<User> findByUsernameAndStatus(String username, int status);
+    Optional<User> findByUsernameAndStatusAndIsDeleted(String username, int status, int isDeleted);
 
-    @Query(value = "SELECT u FROM Users u WHERE u.email = ?1 and u.status = ?2")
     Optional<User> findByEmailAndStatus(String email, int status);
 
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    Collection<UserInfoSummary> findByUsernameAndRolesInAndStatusAndIsDeleted(String username,
+                                                                              Collection<Role> roles,
+                                                                              int status,
+                                                                              int isDeleted);
 }
