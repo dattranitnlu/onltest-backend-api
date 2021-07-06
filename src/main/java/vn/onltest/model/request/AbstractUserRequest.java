@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public abstract class AbstractUserRequest {
     @NotNull
-    @Size(min = 6, max = 50)
+    @Size(min = 3, max = 50)
     protected String username;
 
     @NotNull
