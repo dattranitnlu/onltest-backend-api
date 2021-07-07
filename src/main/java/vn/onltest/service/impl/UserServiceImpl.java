@@ -1,5 +1,7 @@
 package vn.onltest.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import vn.onltest.entity.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
@@ -78,8 +80,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findExistedUserByUsername(String username) {
+        return userRepository.findByUsernameAndIsDeleted(username, 0);
     }
 
     @Override
@@ -117,5 +119,25 @@ public class UserServiceImpl implements UserService {
             return roleRepository.findRolesByNameIn(roles);
         }
     }
+
+    @Override
+    public Page<User> getLecturersIsExistedWithPagination(Pageable pageable) {
+        return userRepository.findByIsDeleted(0, pageable);
+    }
+
+    @Override
+    public Page<User> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable) {
+        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeleted(query, query, query, query, 0, pageable);
+    }
+
+    @Override
+    public int setIsDeletedForUser(int isDeleted, String username) {
+        User localUser = userRepository.findByUsernameAndIsDeleted(username, 0);
+        if(localUser != null) {
+            return userRepository.setIsDeletedFor(isDeleted, username);
+        }
+        return -1;
+    }
+
 }
 
