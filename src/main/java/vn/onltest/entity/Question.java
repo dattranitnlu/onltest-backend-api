@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "Questions")
@@ -23,6 +24,20 @@ public class Question implements Serializable {
 
     private double mark;
     private boolean isShuffle;
+
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    private int status; // 1: active, 0: inactive
+
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+
+    @Column(columnDefinition = "SMALLINT default 0", nullable = false)
+    private int isDeleted;
 
     @ManyToOne
     private QuestionType questionType;

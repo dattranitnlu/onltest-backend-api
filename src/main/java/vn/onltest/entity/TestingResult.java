@@ -18,7 +18,9 @@ public class TestingResult implements Serializable {
     private Long id;
 
     private double grade;
-    private boolean status;
+
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    private int status; // 1: active, 0: inactive
 
     @ManyToOne
     private User student;
