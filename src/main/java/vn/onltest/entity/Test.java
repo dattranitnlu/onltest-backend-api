@@ -23,7 +23,17 @@ public class Test implements Serializable {
     private Date time;
     private int code;
     private Date startTime;
-    private boolean status;
+
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    private int status; // 1: active, 0: inactive
 
     @ManyToOne
     private Subject subject;

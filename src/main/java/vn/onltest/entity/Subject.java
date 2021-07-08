@@ -20,6 +20,9 @@ public class Subject implements Serializable {
 
     private String courseName;
 
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    private int status; // 1: active, 0: inactive
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
     @JsonIgnore
     private List<Group> groupList;
