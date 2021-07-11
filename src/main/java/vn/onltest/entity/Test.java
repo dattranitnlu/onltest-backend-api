@@ -18,6 +18,11 @@ public class Test implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String title;
+
+    @Column(columnDefinition = "text")
+    private String description;
+
     private Date startDate;
     private Date endDate;
     private Date time;
