@@ -52,7 +52,7 @@ public class JwtAuthenticationController {
         if (nameURL.compareToIgnoreCase("student") == 0) {
             listEnumRoles = Collections.singletonList(ERole.ROLE_STUDENT);
         } else if (nameURL.compareToIgnoreCase("admin") == 0) {
-            listEnumRoles = Arrays.asList(ERole.ROLE_ADMIN, ERole.ROLE_STUDENT);
+            listEnumRoles = Arrays.asList(ERole.ROLE_ADMIN, ERole.ROLE_LECTURER);
         }
 
         Collection<Role> roles = userService.getListRoles(listEnumRoles);
