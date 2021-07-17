@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(name = "QuestionTypes")
 @Getter
@@ -17,7 +18,7 @@ public class QuestionType implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private EQuestionType typeName;
 }
 

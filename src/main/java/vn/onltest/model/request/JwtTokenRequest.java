@@ -15,9 +15,4 @@ public class JwtTokenRequest {
 
 	@Size(min = 8, max = 128)
 	private String password;
-
-	public JwtTokenRequest(String username, String password) {
-		this.setUsername(username);
-		this.setPassword(password);
-	}
 }
