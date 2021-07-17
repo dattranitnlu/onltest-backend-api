@@ -1,6 +1,6 @@
 package vn.onltest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +23,6 @@ public class Option implements Serializable {
     private boolean correct;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"question", "mark", "questionType", "optionList", "testingDetailList", "isShuffle"})
+    @JsonBackReference
     private Question question;
 }

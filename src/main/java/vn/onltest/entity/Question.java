@@ -1,6 +1,7 @@
 package vn.onltest.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class Question implements Serializable {
     private double mark;
     private boolean isShuffle;
 
-    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    @Column(columnDefinition = "SMALLINT DEFAULT 1", nullable = false, insertable = false)
     private int status; // 1: active, 0: inactive
 
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
@@ -36,19 +37,22 @@ public class Question implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    @Column(columnDefinition = "SMALLINT default 0", nullable = false)
+    @Column(columnDefinition = "SMALLINT DEFAULT 0", nullable = false, insertable = false)
     private int isDeleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private QuestionType questionType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Subject subject;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Option> optionList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.LAZY)
     private List<AnswerSheet> answerSheetList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.LAZY)
     private List<TestingDetail> testingDetailList;
 }
