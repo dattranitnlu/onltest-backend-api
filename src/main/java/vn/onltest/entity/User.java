@@ -34,7 +34,7 @@ public class User implements Serializable {
     private String phone;
     private String address;
 
-    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
     private int status; // 1: active, 0: inactive
 
     @Column(columnDefinition = "DATE")
@@ -51,7 +51,7 @@ public class User implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    @Column(columnDefinition = "SMALLINT default 0", nullable = false)
+    @Column(columnDefinition = "SMALLINT default 0", nullable = false, insertable = false)
     private int isDeleted;
 
     @ManyToMany(fetch = FetchType.LAZY)
