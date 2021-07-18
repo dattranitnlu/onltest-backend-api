@@ -1,5 +1,6 @@
 package vn.onltest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,13 +21,24 @@ public class Test implements Serializable {
 
     private String title;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    private Date time;
+
+    @Column(name = "doing_duration")
+    private int duration; // stored by minutes
+
     private int code;
+
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
@@ -37,15 +49,14 @@ public class Test implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
-    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
     private int status; // 1: active, 0: inactive
 
     @ManyToOne
+    @JsonIgnore
     private Subject subject;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "test")
-    private List<TestingResult> testingResultList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "test")
+    @JsonIgnore
     private List<TestingDetail> testingDetailList;
 }

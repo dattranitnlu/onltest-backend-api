@@ -1,6 +1,7 @@
 package vn.onltest.controller.user;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Question;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/questions")
+@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
 public class QuestionController {
     private final QuestionService questionService;
 

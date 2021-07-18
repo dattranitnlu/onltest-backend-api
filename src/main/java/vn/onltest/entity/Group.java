@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "Groups")
 @Getter
@@ -19,14 +20,14 @@ public class Group implements Serializable {
 
     private String className;
 
-    @Column(columnDefinition = "SMALLINT default 1", nullable = false)
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
     private int status; // 1: active, 0: inactive
 
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
@@ -35,4 +36,10 @@ public class Group implements Serializable {
 
     @ManyToOne
     private Subject subject;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "GroupDetails",
+            joinColumns = @JoinColumn(name = "groupId"),
+            inverseJoinColumns = @JoinColumn(name = "userId"))
+    private List<User> studentList;
 }
