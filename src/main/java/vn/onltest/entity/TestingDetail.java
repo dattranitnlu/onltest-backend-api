@@ -16,6 +16,7 @@ public class TestingDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String testCode;
     private int testOrder;
 
     @ManyToOne

@@ -34,9 +34,6 @@ public class User implements Serializable {
     private String phone;
     private String address;
 
-    @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
-    private int status; // 1: active, 0: inactive
-
     @Column(columnDefinition = "DATE")
     private Date dateOfBirth;
 
@@ -50,6 +47,9 @@ public class User implements Serializable {
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
+
+    @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
+    private int status; // 1: active, 0: inactive
 
     @Column(columnDefinition = "SMALLINT default 0", nullable = false, insertable = false)
     private int isDeleted;
