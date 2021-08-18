@@ -1,5 +1,4 @@
 HELP.md
-bin/
 target/
 .mvn/
 !**/src/main/**/target/

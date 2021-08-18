@@ -48,7 +48,7 @@ public class UserController {
                                                                     @RequestParam(name = "size", required = false, defaultValue = "25") int size,
                                                                     @RequestParam(name = "query", required = false) String query) {
         Page<User> resultPage;
-        Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fullName").ascending());
         if (query == null) {
             resultPage = userService.getLecturersIsExistedWithPagination(pageable);
         } else {
