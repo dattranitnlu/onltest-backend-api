@@ -4,6 +4,8 @@ target/
 .mvn/
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.properties
+*.yml
 
 ### STS ###
 .apt_generated
