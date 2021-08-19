@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.User;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
+import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.error.BaseErrorResponse;
@@ -44,10 +45,10 @@ public class UserController {
     }
 
     @GetMapping("list")
-    public AbstractResultResponse<List<User>> getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+    public AbstractResultResponse<List<UserListView>> getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                                     @RequestParam(name = "size", required = false, defaultValue = "25") int size,
                                                                     @RequestParam(name = "query", required = false) String query) {
-        Page<User> resultPage;
+        Page<UserListView> resultPage;
         Pageable pageable = PageRequest.of(page, size, Sort.by("fullName").ascending());
         if (query == null) {
             resultPage = userService.getLecturersIsExistedWithPagination(pageable);
