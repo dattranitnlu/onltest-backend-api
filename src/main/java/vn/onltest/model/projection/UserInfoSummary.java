@@ -6,8 +6,4 @@ public interface UserInfoSummary {
     String getUsername();
     String getFullName();
     Collection<RoleInfoSummary> getRoles();
-
-    interface RoleInfoSummary {
-        String getName();
-    }
 }

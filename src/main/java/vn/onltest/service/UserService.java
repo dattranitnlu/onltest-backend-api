@@ -6,6 +6,7 @@ import vn.onltest.entity.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import vn.onltest.model.projection.UserInfoSummary;
+import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.request.AbstractUserRequest;
 
 import java.util.Collection;
@@ -22,9 +23,9 @@ public interface UserService {
 
     Collection<Role> getListRoles(List<ERole> roles);
 
-    Page<User> getLecturersIsExistedWithPagination(Pageable pageable);
+    Page<UserListView> getLecturersIsExistedWithPagination(Pageable pageable);
 
-    Page<User> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable);
+    Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
     int setIsDeletedForUser(int isDeleted, String username);
 }

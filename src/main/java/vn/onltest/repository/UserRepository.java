@@ -8,6 +8,7 @@ import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import vn.onltest.model.projection.UserInfoSummary;
+import vn.onltest.model.projection.UserListView;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -36,15 +37,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findByIsDeleted(int isDeleted, Pageable pageable);
 
-    Page<User> findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeleted(String username,
-                                                                                  String fullName,
-                                                                                  String email,
-                                                                                  String phone,
-                                                                                  int isDeleted,
-                                                                                  Pageable pageable);
+    Page<UserListView> findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeleted(String username,
+                                                                                          String fullName,
+                                                                                          String email,
+                                                                                          String phone,
+                                                                                          int isDeleted,
+                                                                                          Pageable pageable);
 
     @Transactional
     @Modifying
     @Query("update Users u set u.isDeleted = ?1 where u.username = ?2")
     int setIsDeletedFor(int isDeleted, String username);
+
+    Page<UserListView> findByRolesInAndIsDeleted(Collection<Role> roles, int isDeleted, Pageable pageable);
+
+    Page<UserListView> findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(String username,
+                                                                                                    String fullName,
+                                                                                                    String email,
+                                                                                                    String phone,
+                                                                                                    int isDeleted,
+                                                                                                    Collection<Role> roles,
+                                                                                                    Pageable pageable);
 }

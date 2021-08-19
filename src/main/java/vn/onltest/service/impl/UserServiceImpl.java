@@ -8,6 +8,7 @@ import vn.onltest.entity.User;
 import vn.onltest.exception.ServiceException;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.UserInfoSummary;
+import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.request.AbstractUserRequest;
 import vn.onltest.repository.RoleRepository;
 import vn.onltest.repository.UserRepository;
@@ -121,13 +122,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getLecturersIsExistedWithPagination(Pageable pageable) {
-        return userRepository.findByIsDeleted(0, pageable);
+    public Page<UserListView> getLecturersIsExistedWithPagination(Pageable pageable) {
+        Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_LECTURER));
+        return userRepository.findByRolesInAndIsDeleted(roles, 0, pageable);
     }
 
     @Override
-    public Page<User> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable) {
-        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeleted(query, query, query, query, 0, pageable);
+    public Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable) {
+        Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_LECTURER));
+        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, 0, roles, pageable);
     }
 
     @Override
