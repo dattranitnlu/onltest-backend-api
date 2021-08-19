@@ -1,0 +1,4 @@
+
+#ignored all env files.
+*.properties
+*.yml
