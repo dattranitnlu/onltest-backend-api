@@ -18,10 +18,13 @@ public class Group implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String className;
+    private String name;
 
     @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
     private int status; // 1: active, 0: inactive
+
+    @Column(columnDefinition = "SMALLINT default 0", nullable = false, insertable = false)
+    private int isDeleted;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)

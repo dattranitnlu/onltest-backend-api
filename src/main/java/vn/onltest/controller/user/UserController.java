@@ -46,8 +46,8 @@ public class UserController {
 
     @GetMapping("list")
     public AbstractResultResponse<List<UserListView>> getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                                    @RequestParam(name = "size", required = false, defaultValue = "25") int size,
-                                                                    @RequestParam(name = "query", required = false) String query) {
+                                                                            @RequestParam(name = "size", required = false, defaultValue = "25") int size,
+                                                                            @RequestParam(name = "query", required = false) String query) {
         Page<UserListView> resultPage;
         Pageable pageable = PageRequest.of(page, size, Sort.by("fullName").ascending());
         if (query == null) {
