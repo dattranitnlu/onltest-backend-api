@@ -1,5 +1,6 @@
 package vn.onltest.controller;
 
+import lombok.AllArgsConstructor;
 import vn.onltest.config.jwt.JwtUtils;
 import vn.onltest.entity.ERole;
 import vn.onltest.entity.Role;
@@ -19,19 +20,12 @@ import java.util.*;
 @RestController
 @RequestMapping("api/v1/login")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor
 public class JwtAuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserService userService;
-
-    public JwtAuthenticationController(AuthenticationManager authenticationManager,
-                                       JwtUtils jwtUtils,
-                                       UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
-        this.userService = userService;
-    }
 
     @PostMapping("{name}")
     public JwtTokenResponse<?> createAuthenticatedToken(@PathVariable String name,

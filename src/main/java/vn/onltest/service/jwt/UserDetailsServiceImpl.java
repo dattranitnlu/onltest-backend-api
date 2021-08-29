@@ -1,5 +1,6 @@
 package vn.onltest.service.jwt;
 
+import lombok.AllArgsConstructor;
 import vn.onltest.entity.User;
 import vn.onltest.model.response.UserDetailsImpl;
 import vn.onltest.repository.UserRepository;
@@ -10,12 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     @Transactional

@@ -9,22 +9,6 @@ public class RequestException extends RuntimeException {
     Map<String, String> errors;
     HttpStatus httpStatus;
 
-    public Map<String, String> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(Map<String, String> errors) {
-        this.errors = errors;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
     public RequestException(Map<String, String> errors, HttpStatus httpStatus) {
         this.errors = errors;
         this.httpStatus = httpStatus;
@@ -53,4 +37,21 @@ public class RequestException extends RuntimeException {
         this.errors = errors;
         this.httpStatus = httpStatus;
     }
+
+    public Map<String, String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Map<String, String> errors) {
+        this.errors = errors;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
 }

@@ -1,5 +1,6 @@
 package vn.onltest.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -8,12 +9,9 @@ import vn.onltest.repository.TestRepository;
 import vn.onltest.service.TestService;
 
 @Service
+@AllArgsConstructor
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
-
-    public TestServiceImpl(TestRepository testRepository) {
-        this.testRepository = testRepository;
-    }
 
     @Override
     public Page<Test> getTestsWithStatus(String status, Pageable pageable) {

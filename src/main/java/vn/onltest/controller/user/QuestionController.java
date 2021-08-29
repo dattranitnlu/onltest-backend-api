@@ -1,5 +1,6 @@
 package vn.onltest.controller.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -15,12 +16,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api/v1/questions")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@AllArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
-
-    public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
-    }
 
     @PostMapping("create")
     public AbstractResponse createQuestion(@Valid @RequestBody Question questionRequest,
