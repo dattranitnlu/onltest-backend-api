@@ -1,5 +1,6 @@
 package vn.onltest.controller.student;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/students/{studentId}")
 @PreAuthorize("hasRole('STUDENT')")
+@AllArgsConstructor
 public class TestController {
     private final TestService testService;
-
-    public TestController(TestService testService) {
-        this.testService = testService;
-    }
 
     @GetMapping("tests")
     public AbstractResultResponse<List<Test>> getTestsByStudentId(@PathVariable String studentId,

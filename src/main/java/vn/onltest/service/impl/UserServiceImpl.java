@@ -1,5 +1,6 @@
 package vn.onltest.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import vn.onltest.entity.ERole;
@@ -19,15 +20,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     public User createUser(AbstractUserRequest userRequest) {

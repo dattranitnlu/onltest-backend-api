@@ -1,5 +1,6 @@
 package vn.onltest.controller.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/groups")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@AllArgsConstructor
 public class GroupController {
     private final GroupService groupService;
-
-    public GroupController(GroupService groupService) {
-        this.groupService = groupService;
-    }
 
     @GetMapping("list/{lecturerUsername}")
     public AbstractResultResponse<List<Group>> getGroupsIsExistedByLecturerId(

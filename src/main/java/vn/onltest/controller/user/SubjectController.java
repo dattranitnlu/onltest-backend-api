@@ -2,6 +2,7 @@ package vn.onltest.controller.user;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +23,9 @@ import vn.onltest.service.SubjectService;
 @RestController
 @RequestMapping("api/v1/subjects")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@AllArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
-
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
-    }
 
     @GetMapping("list")
     public AbstractResultResponse<List<Subject>> getSubjectsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,

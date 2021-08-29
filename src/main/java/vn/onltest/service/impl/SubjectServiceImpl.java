@@ -1,5 +1,6 @@
 package vn.onltest.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,10 @@ import vn.onltest.repository.SubjectRepository;
 import vn.onltest.service.SubjectService;
 
 @Service
+@AllArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
 	private final SubjectRepository subjectRepository;
 	
-	public SubjectServiceImpl(SubjectRepository subjectRepository) {
-		this.subjectRepository = subjectRepository;
-	}
-
 	@Override
 	public Page<Subject> getSubjectsIsExistedWithPagination(Pageable pageable) {
 		return subjectRepository.findAllBy(pageable);

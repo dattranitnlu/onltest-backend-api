@@ -1,5 +1,6 @@
 package vn.onltest.controller.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,12 +27,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
     public AbstractResultResponse<User> createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
