@@ -1,5 +1,9 @@
 package vn.onltest.controller.user;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,16 +17,27 @@ import vn.onltest.model.response.success.AbstractResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.GroupService;
+import vn.onltest.util.PathUtil;
+import vn.onltest.util.SwaggerUtil;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/groups")
+@RequestMapping(PathUtil.BASE_PATH + "/groups")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
 @AllArgsConstructor
+@Api(tags = "Group")
 public class GroupController {
     private final GroupService groupService;
 
+    @ApiOperation(value = "Get list group test created by lecturer", response = PagingResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
     @GetMapping("list/{lecturerUsername}")
     public AbstractResultResponse<List<Group>> getGroupsIsExistedByLecturerId(
             @PathVariable String lecturerUsername,

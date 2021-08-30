@@ -1,5 +1,9 @@
 package vn.onltest.controller.user;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,18 +24,29 @@ import vn.onltest.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import vn.onltest.util.PathUtil;
+import vn.onltest.util.SwaggerUtil;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping(PathUtil.BASE_PATH + "/users")
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
 @AllArgsConstructor
+@Api(tags = "User")
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
+    @ApiOperation(value = "Create a user", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
+    @PostMapping("create")
     public AbstractResultResponse<User> createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
                                                    BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
         if (bindingResult.hasErrors()) {
@@ -42,6 +57,14 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Get list lecturers", response = PagingResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
     @GetMapping("list")
     public AbstractResultResponse<List<UserListView>> getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                                             @RequestParam(name = "size", required = false, defaultValue = "25") int size,
@@ -66,6 +89,15 @@ public class UserController {
         );
     }
 
+    @ApiOperation(value = "Delete a lecturer by id", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 400, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
     @DeleteMapping("delete/{username}")
     public AbstractResponse deleteLecturerById(@PathVariable String username) {
         int recordAfterDeleted = userService.setIsDeletedForUser(1, username);
