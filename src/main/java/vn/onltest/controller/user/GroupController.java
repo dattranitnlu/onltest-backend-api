@@ -11,15 +11,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Group;
+import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
+import vn.onltest.model.request.GroupModel;
 import vn.onltest.model.response.success.AbstractResultResponse;
+import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.GroupService;
 import vn.onltest.util.PathUtil;
 import vn.onltest.util.SwaggerUtil;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -63,5 +68,24 @@ public class GroupController {
                         resultPage.getTotalPages()
                 )
         );
+    }
+
+    @ApiOperation(value = "Create a group", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
+    @PostMapping("create")
+    public AbstractResultResponse<Group> createGroupForDoingExam(@Valid @RequestBody GroupModel groupModel,
+                                                   BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
+        if (bindingResult.hasErrors()) {
+            throw new CustomMethodArgumentNotValidException(bindingResult);
+        } else {
+            Group createdGroup = groupService.createGroup(groupModel);
+            return new BaseResultResponse<>(HttpStatus.OK.value(), createdGroup);
+        }
     }
 }

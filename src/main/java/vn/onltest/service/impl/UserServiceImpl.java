@@ -130,6 +130,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserListView> getStudentsIsExistedWithPagination(Pageable pageable) {
+        Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_STUDENT));
+        return userRepository.findByRolesInAndIsDeleted(roles, 0, pageable);
+    }
+
+    @Override
+    public Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable) {
+        Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_STUDENT));
+        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, 0, roles, pageable);
+    }
+
+    @Override
     public int setIsDeletedForUser(int isDeleted, String username) {
         User localUser = userRepository.findByUsernameAndIsDeleted(username, 0);
         if(localUser != null) {
