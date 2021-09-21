@@ -18,6 +18,7 @@ public class Group implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(columnDefinition = "SMALLINT default 1", nullable = false, insertable = false)
@@ -45,4 +46,11 @@ public class Group implements Serializable {
             joinColumns = @JoinColumn(name = "groupId"),
             inverseJoinColumns = @JoinColumn(name = "userId"))
     private List<User> studentList;
+
+    public Group(String name, Subject subject, User lecturer, List<User> studentList) {
+        this.name = name;
+        this.subject = subject;
+        this.user = lecturer;
+        this.studentList = studentList;
+    }
 }

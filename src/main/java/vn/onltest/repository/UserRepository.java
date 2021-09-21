@@ -12,6 +12,7 @@ import vn.onltest.model.projection.UserListView;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -58,4 +59,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                                                                                     int isDeleted,
                                                                                                     Collection<Role> roles,
                                                                                                     Pageable pageable);
+
+    List<User> findDistinctByEmailIn(List<String> email);
+
 }

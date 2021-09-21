@@ -89,6 +89,38 @@ public class UserController {
         );
     }
 
+    @ApiOperation(value = "Get list students", response = PagingResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
+    @GetMapping("students/list")
+    public AbstractResultResponse<List<UserListView>> getStudentsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                                            @RequestParam(name = "size", required = false, defaultValue = "25") int size,
+                                                                            @RequestParam(name = "query", required = false) String query) {
+        Page<UserListView> resultPage;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fullName").ascending());
+        if (query == null) {
+            resultPage = userService.getStudentsIsExistedWithPagination(pageable);
+        } else {
+            resultPage = userService.getStudentsIsExistedWithQueryAndPagination(query, pageable);
+        }
+
+        return new PagingResultResponse<>(
+                HttpStatus.OK.value(),
+                resultPage.getContent(),
+                new PageInfo(
+                        page,
+                        size,
+                        (int) resultPage.getTotalElements(),
+                        resultPage.getTotalPages()
+                )
+        );
+    }
+
     @ApiOperation(value = "Delete a lecturer by id", response = BaseResultResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),

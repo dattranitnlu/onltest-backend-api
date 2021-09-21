@@ -11,4 +11,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	Page<Subject> findAllBy(Pageable pageable);
 
 	Page<Subject> findByCourseNameLike(String courseName, Pageable pageable);
+
+	Subject findByCourseName(String courseName);
 }

@@ -27,5 +27,9 @@ public interface UserService {
 
     Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
+    Page<UserListView> getStudentsIsExistedWithPagination(Pageable pageable);
+
+    Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable);
+
     int setIsDeletedForUser(int isDeleted, String username);
 }

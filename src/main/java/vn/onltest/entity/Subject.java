@@ -18,6 +18,7 @@ public class Subject implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String courseName;
 
     @Column(columnDefinition = "SMALLINT default 1", nullable = false)
