@@ -24,6 +24,9 @@ public class Subject implements Serializable {
     @Column(columnDefinition = "SMALLINT default 1", nullable = false)
     private int status; // 1: active, 0: inactive
 
+    @Column(columnDefinition = "SMALLINT default 0", nullable = false, insertable = false)
+    private int isDeleted;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
     @JsonIgnore
     private List<Group> groupList;

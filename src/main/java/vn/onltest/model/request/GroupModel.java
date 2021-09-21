@@ -24,7 +24,7 @@ public class GroupModel {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String username;
+    private String supervisor;
 
     private List<String> studentList;
 }

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.onltest.entity.Subject;
+import vn.onltest.model.projection.SubjectListView;
 import vn.onltest.model.response.success.AbstractResultResponse;
+import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.SubjectService;
@@ -67,4 +69,18 @@ public class SubjectController {
 				)
 		);
     }
+
+	@ApiOperation(value = "Get list subjects not pagination", response = PagingResultResponse.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+			@ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+			@ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+			@ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+			@ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+	})
+	@GetMapping
+	public AbstractResultResponse<List<SubjectListView>> getSubjectsIsExistedNotPagination() {
+		List<SubjectListView> responseData = subjectService.getSubjectsIsExistedNotPagination();
+		return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
+	}
 }

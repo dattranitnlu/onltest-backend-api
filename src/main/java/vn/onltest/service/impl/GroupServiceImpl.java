@@ -25,11 +25,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group createGroup(GroupModel groupModel) {
-        String username = groupModel.getUsername().trim();
+        String supervisor = groupModel.getSupervisor().trim();
         String groupName = groupModel.getName().trim();
         String courseName = groupModel.getCourseName().trim();
 
-        User lecturer = userRepository.findByUsername(username);
+        User lecturer = userRepository.findByUsername(supervisor);
         Subject subject = subjectRepository.findByCourseName(courseName);
         boolean checkExistedGroup = groupRepository.existsByNameAndSubjectAndUserIsAndIsDeleted(groupName, subject, lecturer, 0);
         if(checkExistedGroup) {
