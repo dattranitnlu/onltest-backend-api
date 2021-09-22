@@ -1,4 +1,4 @@
-<h3 align="center">
+<h3 style="text-align: center">
     BACKEND: TEST MAKER APPLICATION
 </h3>
 
@@ -8,6 +8,10 @@ APIs Documentation
 ------------
 - Tool: Swagger
 - Link document: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+Code Conventions By Oracle
+------------
+- Link document: [https://www.oracle.com/java/technologies/javase/codeconventions-contents.html](https://www.oracle.com/java/technologies/javase/codeconventions-contents.html)
 
 Installation
 ------------
@@ -65,7 +69,7 @@ jwt.token.expiration.in.seconds=604800
 
 ```
 
-<p align="center">
+<p style="text-align: center">
     <img src="/src/main/resources/static/images/image_env_file.PNG" alt="Illustration for creating env files">
 </p>
 
@@ -77,7 +81,7 @@ Copy this text into argument vms to run
 -Dspring.profiles.active=<env_name>
 ```
 
-<p align="center">
+<p style="text-align: center">
     <img src="/src/main/resources/static/images/image_add_args.PNG" alt="Illustration for adding arguments">
 </p>
 
@@ -94,7 +98,7 @@ compiled and minified variations. You'll see something like this:
 │   │   └── resources                                       # resources folder
 │   │       ├── static                                      # static - where storing public files
 │   │       ├── templates                                   # templates - where storing HTML template
-│   │       └── application-<env_name>.properties           # env files
+│   │       └── application-<env_name>.yml                  # env files
 │   │
 │   └── test/                                               # test folder - where storing testing files
 │       └── ...
