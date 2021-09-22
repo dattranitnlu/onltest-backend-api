@@ -3,6 +3,7 @@ package vn.onltest.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import vn.onltest.entity.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
@@ -10,6 +11,7 @@ import vn.onltest.exception.ServiceException;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.projection.UserListView;
+import vn.onltest.model.projection.UserListViewForForm;
 import vn.onltest.model.request.AbstractUserRequest;
 import vn.onltest.repository.RoleRepository;
 import vn.onltest.repository.UserRepository;
@@ -93,7 +95,6 @@ public class UserServiceImpl implements UserService {
                                                Collection<Role> roles,
                                                int status,
                                                int isDeleted) {
-
         Collection<UserInfoSummary> userInfoSummaries = userRepository.findByUsernameAndRolesInAndStatusAndIsDeleted(
                 username,
                 roles,
@@ -148,6 +149,26 @@ public class UserServiceImpl implements UserService {
             return userRepository.setIsDeletedFor(isDeleted, username);
         }
         return -1;
+    }
+
+    @Override
+    public List<UserListViewForForm> getStudentsIsExistedForSelectOption() {
+        return getUsersForFormByRole(ERole.ROLE_STUDENT);
+    }
+
+    @Override
+    public List<UserListViewForForm> getLecturersIsExistedForSelectOption() {
+        return getUsersForFormByRole(ERole.ROLE_LECTURER);
+    }
+
+    /**
+     * Get list all users for select option on frontend
+     * @param role: student, lecturer or admin
+     */
+    private List<UserListViewForForm> getUsersForFormByRole(ERole role) {
+        Collection<Role> roles = this.getListRoles(Collections.singletonList(role));
+        Sort sort = Sort.by(Sort.Order.asc("fullName"));
+        return userRepository.findAllByRolesInAndStatusAndIsDeleted(roles, 1, 0, sort);
     }
 
 }

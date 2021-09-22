@@ -2,6 +2,7 @@ package vn.onltest.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import vn.onltest.entity.Role;
@@ -9,6 +10,7 @@ import vn.onltest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.projection.UserListView;
+import vn.onltest.model.projection.UserListViewForForm;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -62,4 +64,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findDistinctByEmailIn(List<String> email);
 
+    List<UserListViewForForm> findAllByRolesInAndStatusAndIsDeleted(Collection<Role> roles, int status, int isDeleted, Sort sort);
 }

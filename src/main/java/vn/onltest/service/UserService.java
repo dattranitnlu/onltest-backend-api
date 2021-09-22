@@ -7,6 +7,7 @@ import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.projection.UserListView;
+import vn.onltest.model.projection.UserListViewForForm;
 import vn.onltest.model.request.AbstractUserRequest;
 
 import java.util.Collection;
@@ -32,4 +33,8 @@ public interface UserService {
     Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
     int setIsDeletedForUser(int isDeleted, String username);
+
+    List<UserListViewForForm> getStudentsIsExistedForSelectOption();
+
+    List<UserListViewForForm> getLecturersIsExistedForSelectOption();
 }

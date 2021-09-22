@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.User;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.projection.UserListView;
+import vn.onltest.model.projection.UserListViewForForm;
 import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.error.BaseErrorResponse;
@@ -119,6 +120,34 @@ public class UserController {
                         resultPage.getTotalPages()
                 )
         );
+    }
+
+    @ApiOperation(value = "Get list students for form", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
+    @GetMapping("students")
+    public AbstractResultResponse<List<UserListViewForForm>> getStudentsIsExistedForSelectOption() {
+        List<UserListViewForForm> responseData = userService.getStudentsIsExistedForSelectOption();
+        return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
+    }
+
+    @ApiOperation(value = "Get list lecturers for form", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+    })
+    @GetMapping("lecturers")
+    public AbstractResultResponse<List<UserListViewForForm>> getLecturersIsExistedForSelectOption() {
+        List<UserListViewForForm> responseData = userService.getLecturersIsExistedForSelectOption();
+        return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }
 
     @ApiOperation(value = "Delete a lecturer by id", response = BaseResultResponse.class)
