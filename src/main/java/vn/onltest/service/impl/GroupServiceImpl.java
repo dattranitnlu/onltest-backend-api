@@ -33,7 +33,7 @@ public class GroupServiceImpl implements GroupService {
         Subject subject = subjectRepository.findByCourseName(courseName);
         boolean checkExistedGroup = groupRepository.existsByNameAndSubjectAndUserIsAndIsDeleted(groupName, subject, lecturer, 0);
         if(checkExistedGroup) {
-            throw new ServiceException("Group with name \"" + groupModel.getName() + "\" already exists. Nothing will be done!");
+            throw new ServiceException("Group with name '" + groupModel.getName() + "' already exists. Nothing will be done!");
         }
 
         List<String> listStudentEmails = groupModel.getStudentList();
