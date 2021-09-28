@@ -1,12 +1,5 @@
 package vn.onltest.config;
 
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import vn.onltest.config.jwt.AuthEntryPointJwt;
 import vn.onltest.config.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +28,6 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableSwagger2
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthEntryPointJwt authEntryPointJwt;
@@ -68,6 +60,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        final String[] PUBLIC_URLS = {
+                "/image/**",
+                "/backend/**",
+                "/home/**",
+                "/downloadFile/**",
+                "/static/**",
+                "/swagger-ui.html"
+        };
+        final String[] PRIVATE_URLS = {
+                "/client/**",
+                "api/v1/users/**",
+                "api/v1/students/**"
+        };
+
         httpSecurity.cors()
                 .and()
                 .csrf().disable().exceptionHandling()
@@ -75,9 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/image/**", "/backend/**", "/home/**", "/downloadFile/**", "/static/**", "/swagger-ui.html")
+                .antMatchers(PUBLIC_URLS)
                 .permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/client/**", "api/v1/users/**", "api/v1/students/**").authenticated();
+                .antMatchers(HttpMethod.OPTIONS, PRIVATE_URLS).authenticated();
 
         httpSecurity.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -99,23 +105,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity webSecurity) {
         webSecurity.ignoring().antMatchers(HttpMethod.POST, "/api/v1/login/**")
                 .antMatchers(HttpMethod.OPTIONS, "/client/**", "api/v1/users/**");
-    }
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("vn.onltest.controller"))
-                .paths(PathSelectors.regex("/.*"))
-                .build()
-                .apiInfo(apiEndPointsInfo());
-    }
-
-    private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("Test Maker Application")
-                .description("Make a different examinations in the world")
-                .license("Dat Tran")
-                .licenseUrl("https://github.com/hetsotchet12345")
-                .version("1.0.0")
-                .build();
     }
 }
