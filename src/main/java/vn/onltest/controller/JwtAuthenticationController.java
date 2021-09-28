@@ -26,7 +26,6 @@ import java.util.*;
 @AllArgsConstructor
 @Api(tags = "Authentication (Admin || Student || Lecturer)")
 public class JwtAuthenticationController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserService userService;
