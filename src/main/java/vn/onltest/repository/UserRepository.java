@@ -64,5 +64,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findDistinctByEmailIn(List<String> email);
 
-    List<UserListViewForForm> findAllByRolesInAndStatusAndIsDeleted(Collection<Role> roles, int status, int isDeleted, Sort sort);
+    List<UserListViewForForm> findAllByRolesInAndStatusAndIsDeleted(Collection<Role> roles,
+                                                                    int status,
+                                                                    int isDeleted,
+                                                                    Sort sort);
 }

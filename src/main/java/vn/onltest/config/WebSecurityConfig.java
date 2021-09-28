@@ -29,7 +29,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final AuthEntryPointJwt authEntryPointJwt;
     private final UserDetailsService userDetailsService;
     private final AuthTokenFilter authTokenFilter;
