@@ -25,7 +25,7 @@ Pre-conditions:
 ### Clone repo
 
 ``` bash
-$ git clone https://github.com/hetsotchet12345/onltest-backend-api.git
+git clone https://github.com/hetsotchet12345/onltest-backend-api.git
 ```
 
 ### Create environment file with application-<env_name>.properties in <project>/src/main/resources/
@@ -69,7 +69,7 @@ jwt.token.expiration.in.seconds=604800
 
 ```
 
-<p style="text-align: center">
+<p align="center">
     <img src="/src/main/resources/static/images/image_env_file.PNG" alt="Illustration for creating env files">
 </p>
 
