@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Group;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.request.GroupModel;
-import vn.onltest.model.response.success.AbstractResultResponse;
+import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
@@ -25,7 +25,6 @@ import vn.onltest.util.PathUtil;
 import vn.onltest.util.SwaggerUtil;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/groups")
@@ -44,7 +43,7 @@ public class GroupController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("list/{lecturerUsername}")
-    public AbstractResultResponse<List<Group>> getGroupsIsExistedByLecturerId(
+    public AbstractResponse getGroupsIsExistedByLecturerId(
             @PathVariable String lecturerUsername,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "size", required = false, defaultValue = "25") int size,
@@ -79,7 +78,7 @@ public class GroupController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
-    public AbstractResultResponse<Group> createGroupForDoingExam(@Valid @RequestBody GroupModel groupModel,
+    public AbstractResponse createGroupForDoingExam(@Valid @RequestBody GroupModel groupModel,
                                                    BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
         if (bindingResult.hasErrors()) {
             throw new CustomMethodArgumentNotValidException(bindingResult);

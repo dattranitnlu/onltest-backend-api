@@ -17,7 +17,6 @@ import vn.onltest.model.projection.UserListViewForForm;
 import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.error.BaseErrorResponse;
-import vn.onltest.model.response.success.AbstractResultResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
@@ -48,7 +47,7 @@ public class UserController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
-    public AbstractResultResponse<User> createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
+    public AbstractResponse createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
                                                    BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
         if (bindingResult.hasErrors()) {
             throw new CustomMethodArgumentNotValidException(bindingResult);
@@ -67,7 +66,7 @@ public class UserController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("list")
-    public AbstractResultResponse<List<UserListView>> getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+    public AbstractResponse getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                                             @RequestParam(name = "size", required = false, defaultValue = "25") int size,
                                                                             @RequestParam(name = "query", required = false) String query) {
         Page<UserListView> resultPage;
@@ -99,7 +98,7 @@ public class UserController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("students/list")
-    public AbstractResultResponse<List<UserListView>> getStudentsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+    public AbstractResponse getStudentsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                                             @RequestParam(name = "size", required = false, defaultValue = "25") int size,
                                                                             @RequestParam(name = "query", required = false) String query) {
         Page<UserListView> resultPage;
@@ -131,7 +130,7 @@ public class UserController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("students")
-    public AbstractResultResponse<List<UserListViewForForm>> getStudentsIsExistedForSelectOption() {
+    public AbstractResponse getStudentsIsExistedForSelectOption() {
         List<UserListViewForForm> responseData = userService.getStudentsIsExistedForSelectOption();
         return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }
@@ -145,7 +144,7 @@ public class UserController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("lecturers")
-    public AbstractResultResponse<List<UserListViewForForm>> getLecturersIsExistedForSelectOption() {
+    public AbstractResponse getLecturersIsExistedForSelectOption() {
         List<UserListViewForForm> responseData = userService.getLecturersIsExistedForSelectOption();
         return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }

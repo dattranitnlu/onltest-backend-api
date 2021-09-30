@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.onltest.entity.Subject;
 import vn.onltest.model.projection.SubjectListView;
-import vn.onltest.model.response.success.AbstractResultResponse;
+import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
@@ -45,9 +45,9 @@ public class SubjectController {
 			@ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
 	})
 	@GetMapping("list")
-    public AbstractResultResponse<List<Subject>> getSubjectsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-																	  @RequestParam(name = "size", required = false, defaultValue = "25") int size,
-																	  @RequestParam(name = "query", required = false) String query) {
+    public AbstractResponse getSubjectsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+												 @RequestParam(name = "size", required = false, defaultValue = "25") int size,
+												 @RequestParam(name = "query", required = false) String query) {
 
 		Page<Subject> resultPage;
 		Pageable pageable = PageRequest.of(page, size, Sort.by("courseName").ascending());
@@ -79,7 +79,7 @@ public class SubjectController {
 			@ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
 	})
 	@GetMapping
-	public AbstractResultResponse<List<SubjectListView>> getSubjectsIsExistedNotPagination() {
+	public AbstractResponse getSubjectsIsExistedNotPagination() {
 		List<SubjectListView> responseData = subjectService.getSubjectsIsExistedNotPagination();
 		return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
 	}
