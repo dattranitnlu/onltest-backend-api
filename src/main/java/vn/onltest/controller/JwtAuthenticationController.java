@@ -3,8 +3,6 @@ package vn.onltest.controller;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import vn.onltest.config.jwt.JwtUtils;
-import vn.onltest.entity.ERole;
-import vn.onltest.entity.Role;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.request.JwtTokenRequest;
 import vn.onltest.model.response.success.JwtTokenResponse;
@@ -18,7 +16,6 @@ import vn.onltest.util.PathUtil;
 import vn.onltest.util.SwaggerUtil;
 
 import javax.validation.Valid;
-import java.util.*;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/login")
@@ -48,22 +45,9 @@ public class JwtAuthenticationController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserInfoSummary user = getUserInfoWithRole(jwtTokenRequest.getUsername(), name);
+        UserInfoSummary user = userService.getUserInfoWithRole(jwtTokenRequest.getUsername(), name);
         String token = jwtUtils.generateJwtToken(authentication);
         return new JwtTokenResponse<>(token, user);
-    }
-
-    private UserInfoSummary getUserInfoWithRole(String username, String nameURL) {
-        List<ERole> listEnumRoles = null;
-        if (nameURL.compareToIgnoreCase("student") == 0) {
-            listEnumRoles = Collections.singletonList(ERole.ROLE_STUDENT);
-        } else if (nameURL.compareToIgnoreCase("admin") == 0) {
-            listEnumRoles = Arrays.asList(ERole.ROLE_ADMIN, ERole.ROLE_LECTURER);
-        }
-
-        Collection<Role> roles = userService.getListRoles(listEnumRoles);
-
-        return userService.findUserInfoSummary(username, roles, 1, 0);
     }
 
 }
