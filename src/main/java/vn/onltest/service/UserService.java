@@ -37,4 +37,6 @@ public interface UserService {
     List<UserListViewForForm> getStudentsIsExistedForSelectOption();
 
     List<UserListViewForForm> getLecturersIsExistedForSelectOption();
+
+    UserInfoSummary getUserInfoWithRole(String username, String nameURL);
 }

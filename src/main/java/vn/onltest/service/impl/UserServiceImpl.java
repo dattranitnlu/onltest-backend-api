@@ -161,6 +161,22 @@ public class UserServiceImpl implements UserService {
         return getUsersForFormByRole(ERole.ROLE_LECTURER);
     }
 
+    @Override
+    public UserInfoSummary getUserInfoWithRole(String username, String nameURL) {
+        List<ERole> listEnumRoles = null;
+        if (nameURL.compareToIgnoreCase("student") == 0) {
+            listEnumRoles = Collections.singletonList(ERole.ROLE_STUDENT);
+        } else if (nameURL.compareToIgnoreCase("admin") == 0) {
+            listEnumRoles = Collections.singletonList(ERole.ROLE_ADMIN);
+        } else if (nameURL.compareToIgnoreCase("lecturer") == 0) {
+            listEnumRoles = Collections.singletonList(ERole.ROLE_LECTURER);
+        }
+
+        Collection<Role> roles = getListRoles(listEnumRoles);
+
+        return findUserInfoSummary(username, roles, 1, 0);
+    }
+
     /**
      * Get list all users for select option on frontend
      * @param role: student, lecturer or admin
