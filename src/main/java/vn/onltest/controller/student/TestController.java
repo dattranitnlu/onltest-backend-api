@@ -20,6 +20,8 @@ import vn.onltest.service.TestService;
 import vn.onltest.util.PathUtil;
 import vn.onltest.util.SwaggerUtil;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/students/{studentId}")
 @PreAuthorize("hasRole('STUDENT')")
@@ -37,12 +39,13 @@ public class TestController {
             @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("tests")
-    public AbstractResponse getTestsByStudentId(@PathVariable String studentId,
+    public AbstractResponse getTestsByStudentId(Principal principal,
                                                 @RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                                 @RequestParam(name = "size", required = false, defaultValue = "12") int size,
                                                 @RequestParam(name = "query", required = false, defaultValue = "done") String query) {
+        String username = principal.getName();
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "id");
-        Page<Test> resultPage = testService.getTestsWithStatus(query.trim(), pageable);
+        Page<Test> resultPage = testService.getTestsWithQuery(username, query.trim(), pageable);
 
         return new PagingResultResponse<>(
                 HttpStatus.OK.value(),

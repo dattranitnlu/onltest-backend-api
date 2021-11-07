@@ -13,6 +13,5 @@ public interface SubjectService {
 
     Page<Subject> getSubjectsIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
-
     List<SubjectListView> getSubjectsIsExistedNotPagination();
 }

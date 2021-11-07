@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import vn.onltest.entity.ERole;
+import vn.onltest.entity.constant.DeleteStatusConstant;
+import vn.onltest.entity.constant.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
+import vn.onltest.entity.constant.StatusConstant;
 import vn.onltest.exception.ServiceException;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.UserInfoSummary;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
                     userRequest.getFullName(),
                     userRequest.getPhone(),
                     userRequest.getAddress(),
-                    1,
+                    StatusConstant.ACTIVATION,
                     userRequest.getDateOfBirth(),
                     userRequest.getGender());
             Set<String> strRoles = userRequest.getRoles();
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findExistedUserByUsername(String username) {
-        return userRepository.findByUsernameAndIsDeleted(username, 0);
+        return userRepository.findByUsernameAndIsDeleted(username, DeleteStatusConstant.NOT_DELETED);
     }
 
     @Override
@@ -121,30 +123,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserListView> getLecturersIsExistedWithPagination(Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_LECTURER));
-        return userRepository.findByRolesInAndIsDeleted(roles, 0, pageable);
+        return userRepository.findByRolesInAndIsDeleted(roles, DeleteStatusConstant.NOT_DELETED, pageable);
     }
 
     @Override
     public Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_LECTURER));
-        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, 0, roles, pageable);
+        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, DeleteStatusConstant.NOT_DELETED, roles, pageable);
     }
 
     @Override
     public Page<UserListView> getStudentsIsExistedWithPagination(Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_STUDENT));
-        return userRepository.findByRolesInAndIsDeleted(roles, 0, pageable);
+        return userRepository.findByRolesInAndIsDeleted(roles, DeleteStatusConstant.NOT_DELETED, pageable);
     }
 
     @Override
     public Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_STUDENT));
-        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, 0, roles, pageable);
+        return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, DeleteStatusConstant.NOT_DELETED, roles, pageable);
     }
 
     @Override
     public int setIsDeletedForUser(int isDeleted, String username) {
-        User localUser = userRepository.findByUsernameAndIsDeleted(username, 0);
+        User localUser = userRepository.findByUsernameAndIsDeleted(username, DeleteStatusConstant.NOT_DELETED);
         if(localUser != null) {
             return userRepository.setIsDeletedFor(isDeleted, username);
         }
@@ -174,7 +176,7 @@ public class UserServiceImpl implements UserService {
 
         Collection<Role> roles = getListRoles(listEnumRoles);
 
-        return findUserInfoSummary(username, roles, 1, 0);
+        return findUserInfoSummary(username, roles, StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED);
     }
 
     /**
@@ -184,7 +186,7 @@ public class UserServiceImpl implements UserService {
     private List<UserListViewForForm> getUsersForFormByRole(ERole role) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(role));
         Sort sort = Sort.by(Sort.Order.asc("fullName"));
-        return userRepository.findAllByRolesInAndStatusAndIsDeleted(roles, 1, 0, sort);
+        return userRepository.findAllByRolesInAndStatusAndIsDeleted(roles, StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED, sort);
     }
 
 }

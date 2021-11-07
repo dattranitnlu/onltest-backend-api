@@ -38,7 +38,7 @@ public class QuestionController {
     @PostMapping("create")
     public AbstractResponse createQuestion(@Valid @RequestBody Question questionRequest,
                                            BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
-        if (bindingResult.hasErrors()) {
+    	if (bindingResult.hasErrors()) {
             throw new CustomMethodArgumentNotValidException(bindingResult);
         } else {
             Question createdQuestion = questionService.createQuestion(questionRequest);

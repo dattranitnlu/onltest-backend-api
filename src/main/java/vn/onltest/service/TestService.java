@@ -6,5 +6,5 @@ import vn.onltest.entity.Test;
 
 public interface TestService {
 
-    Page<Test> getTestsWithStatus(String status, Pageable pageable);
+    Page<Test> getTestsWithQuery(String username, String query, Pageable pageable);
 }

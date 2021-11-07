@@ -14,10 +14,10 @@ public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
 
     @Override
-    public Page<Test> getTestsWithStatus(String status, Pageable pageable) {
-        if(status.compareToIgnoreCase("not-started") == 0) {
+    public Page<Test> getTestsWithQuery(String username, String query, Pageable pageable) {
+        if(query.compareToIgnoreCase("not-started") == 0) {
             return testRepository.findNotStartedTestsWithQuery(pageable);
-        } else if (status.compareToIgnoreCase("on-going") == 0) {
+        } else if (query.compareToIgnoreCase("on-going") == 0) {
             return testRepository.findOnGoingTestsWithQuery(pageable);
         } else {
             return testRepository.findDoneTestsWithQuery(pageable);

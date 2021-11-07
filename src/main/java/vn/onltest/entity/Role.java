@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vn.onltest.entity.constant.ERole;
 
 import javax.persistence.*;
 import java.io.Serializable;

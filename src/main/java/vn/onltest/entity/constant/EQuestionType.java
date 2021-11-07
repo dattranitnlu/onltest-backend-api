@@ -1,4 +1,4 @@
-package vn.onltest.entity;
+package vn.onltest.entity.constant;
 
 public enum EQuestionType {
     SINGLE_CHOICE,
