@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import vn.onltest.entity.Group;
 import vn.onltest.entity.Subject;
 import vn.onltest.entity.User;
+import vn.onltest.entity.constant.DeleteStatusConstant;
 import vn.onltest.exception.ServiceException;
 import vn.onltest.model.request.GroupModel;
 import vn.onltest.repository.GroupRepository;
@@ -31,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
 
         User lecturer = userRepository.findByUsername(supervisor);
         Subject subject = subjectRepository.findByCourseName(courseName);
-        boolean checkExistedGroup = groupRepository.existsByNameAndSubjectAndUserIsAndIsDeleted(groupName, subject, lecturer, 0);
+        boolean checkExistedGroup = groupRepository.existsByNameAndSubjectAndLecturerIsAndIsDeleted(groupName, subject, lecturer, DeleteStatusConstant.NOT_DELETED);
         if(checkExistedGroup) {
             throw new ServiceException("Group with name '" + groupModel.getName() + "' already exists. Nothing will be done!");
         }
@@ -45,11 +46,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Page<Group> getGroupsIsExistedByLecturerIdWithPagination(String username, Pageable pageable) {
-        return groupRepository.findByUserAndIsDeleted(username, 0, pageable);
+        return groupRepository.findByLecturerAndIsDeleted(username, DeleteStatusConstant.NOT_DELETED, pageable);
     }
 
     @Override
     public Page<Group> getGroupsIsExistedByLecturerIdWithQueryAndPagination(String username, String query, Pageable pageable) {
-        return groupRepository.findByNameLikeAndUserAndIsDeleted(query, username, 0, pageable);
+        return groupRepository.findByNameLikeAndLecturerAndIsDeleted(query, username, DeleteStatusConstant.NOT_DELETED, pageable);
     }
 }

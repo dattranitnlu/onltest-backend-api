@@ -19,7 +19,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/login")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @AllArgsConstructor
 @Api(tags = "Authentication (Admin || Student || Lecturer)")
 public class JwtAuthenticationController {

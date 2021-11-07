@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
-    @Query("select g from Groups g where g.user.username = ?1 and g.isDeleted = ?2")
-    Page<Group> findByUserAndIsDeleted(String username, int isDeleted, Pageable pageable);
+    @Query("select g from Groups g where g.lecturer.username = ?1 and g.isDeleted = ?2")
+    Page<Group> findByLecturerAndIsDeleted(String username, int isDeleted, Pageable pageable);
 
-    @Query("select g from Groups g where g.name like ?1 and g.user.username = ?2 and g.isDeleted = ?3")
-    Page<Group> findByNameLikeAndUserAndIsDeleted(String className, String username, int isDeleted, Pageable pageable);
+    @Query("select g from Groups g where g.name like ?1 and g.lecturer.username = ?2 and g.isDeleted = ?3")
+    Page<Group> findByNameLikeAndLecturerAndIsDeleted(String className, String username, int isDeleted, Pageable pageable);
 
-    List<Group> findByNameAndSubjectAndUserAndIsDeleted(String name, Subject subject, User user, int isDeleted);
+    List<Group> findByNameAndSubjectAndLecturerAndIsDeleted(String name, Subject subject, User user, int isDeleted);
 
-    Boolean existsByNameAndSubjectAndUserIsAndIsDeleted(String name, Subject subject, User user, int isDeleted);
+    Boolean existsByNameAndSubjectAndLecturerIsAndIsDeleted(String name, Subject subject, User user, int isDeleted);
 }

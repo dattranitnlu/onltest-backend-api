@@ -2,7 +2,7 @@ package vn.onltest.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vn.onltest.entity.ERole;
+import vn.onltest.entity.constant.ERole;
 import vn.onltest.entity.Role;
 import vn.onltest.entity.User;
 import vn.onltest.model.projection.UserInfoSummary;

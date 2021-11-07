@@ -3,6 +3,7 @@ package vn.onltest.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vn.onltest.entity.constant.EQuestionType;
 
 import javax.persistence.*;
 import java.io.Serializable;

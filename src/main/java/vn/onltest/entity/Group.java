@@ -36,7 +36,7 @@ public class Group implements Serializable {
     private Date updatedDate;
 
     @ManyToOne
-    private User user;
+    private User lecturer;
 
     @ManyToOne
     private Subject subject;
@@ -50,7 +50,7 @@ public class Group implements Serializable {
     public Group(String name, Subject subject, User lecturer, List<User> studentList) {
         this.name = name;
         this.subject = subject;
-        this.user = lecturer;
+        this.lecturer = lecturer;
         this.studentList = studentList;
     }
 }
