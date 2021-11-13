@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @ApiModel(value = "Login Model Request")
 public class JwtTokenRequest {
 
+	@Size(min = 5, max = 128)
 	private String username;
 
 	@Size(min = 8, max = 128)

@@ -2,7 +2,9 @@ package vn.onltest.controller;
 
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.BindingResult;
 import vn.onltest.config.jwt.JwtUtils;
+import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.request.JwtTokenRequest;
 import vn.onltest.model.response.success.JwtTokenResponse;
@@ -37,16 +39,21 @@ public class JwtAuthenticationController {
     })
     @PostMapping("{name}")
     public JwtTokenResponse<?> createAuthenticatedToken(@PathVariable String name,
-                                                        @Valid @RequestBody JwtTokenRequest jwtTokenRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(jwtTokenRequest.getUsername(),
-                        jwtTokenRequest.getPassword())
-        );
+                                                        @Valid @RequestBody JwtTokenRequest jwtTokenRequest,
+                                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new CustomMethodArgumentNotValidException(bindingResult);
+        } else {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(jwtTokenRequest.getUsername(),
+                            jwtTokenRequest.getPassword())
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserInfoSummary user = userService.getUserInfoWithRole(jwtTokenRequest.getUsername(), name);
-        String token = jwtUtils.generateJwtToken(authentication);
-        return new JwtTokenResponse<>(token, user);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserInfoSummary user = userService.getUserInfoWithRole(jwtTokenRequest.getUsername(), name);
+            String token = jwtUtils.generateJwtToken(authentication);
+            return new JwtTokenResponse<>(token, user);
+        }
     }
 
 }
