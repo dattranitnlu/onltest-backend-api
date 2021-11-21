@@ -38,13 +38,14 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @ApiOperation(value = "Create a user", response = BaseResultResponse.class)
+    @ApiOperation(value = "Tạo một tài khoản admin, giáo viên", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
     public AbstractResponse createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
@@ -57,13 +58,14 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Get list lecturers", response = PagingResultResponse.class)
+    @ApiOperation(value = "Lấy danh sách giáo viên", response = PagingResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("list")
     public AbstractResponse getLecturersIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -89,18 +91,19 @@ public class UserController {
         );
     }
 
-    @ApiOperation(value = "Get list students", response = PagingResultResponse.class)
+    @ApiOperation(value = "Lấy danh sách sinh viên (học sinh)", response = PagingResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("students/list")
     public AbstractResponse getStudentsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                                            @RequestParam(name = "size", required = false, defaultValue = "25") int size,
-                                                                            @RequestParam(name = "query", required = false) String query) {
+                                                @RequestParam(name = "size", required = false, defaultValue = "25") int size,
+                                                @RequestParam(name = "query", required = false) String query) {
         Page<UserListView> resultPage;
         Pageable pageable = PageRequest.of(page, size, Sort.by("fullName").ascending());
         if (query == null) {
@@ -121,13 +124,14 @@ public class UserController {
         );
     }
 
-    @ApiOperation(value = "Get list students for form", response = BaseResultResponse.class)
+    @ApiOperation(value = "Lấy danh sách sinh viên cho form (Không phân trang)", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("students")
     public AbstractResponse getStudentsIsExistedForSelectOption() {
@@ -135,13 +139,14 @@ public class UserController {
         return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }
 
-    @ApiOperation(value = "Get list lecturers for form", response = BaseResultResponse.class)
+    @ApiOperation(value = "Lấy danh sách giáo viên cho form (Không phân trang)", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("lecturers")
     public AbstractResponse getLecturersIsExistedForSelectOption() {
@@ -149,14 +154,14 @@ public class UserController {
         return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }
 
-    @ApiOperation(value = "Delete a lecturer by id", response = BaseResultResponse.class)
+    @ApiOperation(value = "Xóa một giáo viên bằng ID", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 400, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @DeleteMapping("delete/{username}")
     public AbstractResponse deleteLecturerById(@PathVariable String username) {

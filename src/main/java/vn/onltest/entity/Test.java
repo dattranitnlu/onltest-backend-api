@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity(name = "Tests")
 @Getter
@@ -52,8 +51,4 @@ public class Test implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Subject subject;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "test")
-    @JsonIgnore
-    private List<TestingDetail> testingDetailList;
 }
