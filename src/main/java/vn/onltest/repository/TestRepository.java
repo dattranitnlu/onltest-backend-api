@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import vn.onltest.entity.Test;
 
+import java.util.Date;
+
 public interface TestRepository extends JpaRepository<Test, Long> {
 
     @Query(value = "SELECT m FROM Tests m " +

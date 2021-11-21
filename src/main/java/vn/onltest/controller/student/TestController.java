@@ -23,7 +23,7 @@ import vn.onltest.util.SwaggerUtil;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(PathUtil.BASE_PATH + "/students/{studentId}")
+@RequestMapping(PathUtil.BASE_PATH + "/students")
 @PreAuthorize("hasRole('STUDENT')")
 @AllArgsConstructor
 @Api(tags = "Test")

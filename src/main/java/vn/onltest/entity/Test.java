@@ -24,11 +24,9 @@ public class Test implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
@@ -37,7 +35,6 @@ public class Test implements Serializable {
 
     private int code;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
