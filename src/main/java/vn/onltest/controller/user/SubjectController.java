@@ -36,13 +36,14 @@ import vn.onltest.util.SwaggerUtil;
 public class SubjectController {
     private final SubjectService subjectService;
 
-	@ApiOperation(value = "Get list subjects", response = PagingResultResponse.class)
+	@ApiOperation(value = "Lấy danh sách những môn học", response = PagingResultResponse.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-			@ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-			@ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-			@ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-			@ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+			@ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+			@ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+			@ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+			@ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+			@ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+			@ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
 	})
 	@GetMapping("list")
     public AbstractResponse getSubjectsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -61,22 +62,18 @@ public class SubjectController {
 		return new PagingResultResponse<>(
 				HttpStatus.OK.value(),
 				resultPage.getContent(),
-				new PageInfo(
-						page,
-						size,
-						(int) resultPage.getTotalElements(),
-						resultPage.getTotalPages()
-				)
+				new PageInfo(page, size, resultPage.getTotalElements(), resultPage.getTotalPages())
 		);
     }
 
-	@ApiOperation(value = "Get list subjects not pagination", response = PagingResultResponse.class)
+	@ApiOperation(value = "Lấy danh sách những môn học (Không phân trang)", response = BaseResultResponse.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-			@ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-			@ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-			@ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-			@ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+			@ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+			@ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+			@ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+			@ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+			@ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+			@ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
 	})
 	@GetMapping
 	public AbstractResponse getSubjectsIsExistedNotPagination() {

@@ -34,13 +34,14 @@ import javax.validation.Valid;
 public class GroupController {
     private final GroupService groupService;
 
-    @ApiOperation(value = "Get list group test created by lecturer", response = PagingResultResponse.class)
+    @ApiOperation(value = "Lấy danh sách nhóm được tạo bởi một giáo viên", response = PagingResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @GetMapping("list/{lecturerUsername}")
     public AbstractResponse getGroupsIsExistedByLecturerId(
@@ -69,13 +70,14 @@ public class GroupController {
         );
     }
 
-    @ApiOperation(value = "Create a group", response = BaseResultResponse.class)
+    @ApiOperation(value = "Tạo một nhóm để làm kiểm tra", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
     public AbstractResponse createGroupForDoingExam(@Valid @RequestBody GroupModel groupModel,

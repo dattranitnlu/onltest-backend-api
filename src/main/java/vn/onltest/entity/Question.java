@@ -39,7 +39,7 @@ public class Question implements Serializable {
     @Column(columnDefinition = "SMALLINT DEFAULT 0", nullable = false, insertable = false)
     private int isDeleted;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private QuestionType questionType;
 
     @ManyToOne(fetch = FetchType.LAZY)
