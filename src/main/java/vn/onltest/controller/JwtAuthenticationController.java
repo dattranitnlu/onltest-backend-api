@@ -28,14 +28,14 @@ public class JwtAuthenticationController {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
-    @ApiOperation(value = "Login user (admin || lecturer || student)", response = JwtTokenResponse.class)
+    @ApiOperation(value = "Đăng nhập", response = JwtTokenResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = 400, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = 401, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = 403, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = 404, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = 500, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
+            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
+            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
+            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
     })
     @PostMapping("{name}")
     public JwtTokenResponse<?> createAuthenticatedToken(@PathVariable String name,

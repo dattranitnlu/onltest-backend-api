@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import vn.onltest.entity.Test;
 
+import java.util.Date;
+import java.util.Optional;
+
 public interface TestRepository extends JpaRepository<Test, Long> {
 
     @Query(value = "SELECT m FROM Tests m " +
@@ -19,5 +22,7 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     @Query(value = "SELECT m FROM Tests m " +
             "WHERE m.endDate < CURRENT_TIMESTAMP AND m.status = 0")
     Page<Test> findDoneTestsWithQuery(Pageable pageable);
+
+    Optional<Test> findByIdAndStatus(long id, int status);
 
 }

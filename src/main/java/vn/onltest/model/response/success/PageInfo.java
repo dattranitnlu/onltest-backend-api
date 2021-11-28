@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class PageInfo {
     private int currentPage;
-    private int itemsPerPage;
-    private int totalElements;
+    private long itemsPerPage;
+    private long totalElements;
     private int totalPages;
 
-    public PageInfo(int currentPage, int itemsPerPage, int totalElements, int totalPages) {
+    public PageInfo(int currentPage, long itemsPerPage, long totalElements, int totalPages) {
         this.currentPage = currentPage;
         this.itemsPerPage = itemsPerPage;
         this.totalElements = totalElements;

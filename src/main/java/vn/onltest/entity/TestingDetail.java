@@ -17,6 +17,7 @@ public class TestingDetail implements Serializable {
     private Long id;
 
     private int testOrder;
+    private String testCode;
 
     @ManyToOne
     private Test test;
