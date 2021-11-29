@@ -1,0 +1,1 @@
+INSERT INTO "tests"("id", "code", "end_date", "start_date", "start_time", "subject_id", "created_date", "updated_date", "description", "title", "status", "doing_duration") VALUES (1, 2019, '2021-12-22 20:55:00.848472', '2021-07-15 20:55:00.848472', NULL, 214352, '2021-07-15 20:53:35', '2021-07-15 20:55:00.848472', 'Middterm Test', 'OOP Programming', 1, 120);

@@ -1,0 +1,12 @@
+INSERT INTO "group_details"("group_id", "user_id") VALUES (1, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (251, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (252, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (253, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (256, 254);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (257, 254);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (256, 255);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (257, 255);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (260, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (260, 255);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (263, 6);
+INSERT INTO "group_details"("group_id", "user_id") VALUES (263, 254);
