@@ -1,6 +1,7 @@
 package vn.onltest.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class TestingDetailServiceImpl implements TestingDetailService {
     private final TestingDetailRepository testingDetailRepository;
     private final TestRepository testRepository;
+    private final MessageSource messages;
 
     @Override
     public Page<TestingDetailListView> listAllQuestionInExam(long testId, String testCode, Pageable pageable) {
@@ -29,7 +31,7 @@ public class TestingDetailServiceImpl implements TestingDetailService {
 
             return result;
         } else {
-            throw new NotFoundException("Not found test");
+            throw new NotFoundException(String.format(messages.getMessage("test.get.error.not-found", null, null), testId));
         }
 
     }

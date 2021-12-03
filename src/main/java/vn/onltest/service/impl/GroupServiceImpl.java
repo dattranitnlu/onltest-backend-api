@@ -1,6 +1,7 @@
 package vn.onltest.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
+    private final MessageSource messages;
 
     @Override
     public Group createGroup(GroupModel groupModel) {
@@ -34,7 +36,7 @@ public class GroupServiceImpl implements GroupService {
         Subject subject = subjectRepository.findByCourseName(courseName);
         boolean checkExistedGroup = groupRepository.existsByNameAndSubjectAndLecturerIsAndIsDeleted(groupName, subject, lecturer, DeleteStatusConstant.NOT_DELETED);
         if(checkExistedGroup) {
-            throw new ServiceException("Group with name '" + groupModel.getName() + "' already exists. Nothing will be done!");
+            throw new ServiceException(String.format(messages.getMessage("group.create.error.existed", null, null), groupModel.getName()));
         }
 
         List<String> listStudentEmails = groupModel.getStudentList();
