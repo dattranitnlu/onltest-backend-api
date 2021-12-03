@@ -1,6 +1,7 @@
 package vn.onltest.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,12 +29,13 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final MessageSource messages;
 
     @Override
     public User createUser(AbstractUserRequest userRequest) {
         User localUser = userRepository.findByEmail(userRequest.getEmail());
         if (localUser != null) {
-            throw new ServiceException("Email " + localUser.getEmail() + " already exists. Nothing will be done!");
+            throw new ServiceException(String.format(messages.getMessage("user.create.error.mail-existed", null, null), localUser.getEmail()));
         } else {
             String salt = BCrypt.gensalt();
             localUser = new User(userRequest.getUsername(),
@@ -50,24 +52,24 @@ public class UserServiceImpl implements UserService {
 
             if (strRoles == null) {
                 Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        .orElseThrow(() -> new RuntimeException(messages.getMessage("role.get.error.not-found", null, null)));
                 roles.add(userRole);
             } else {
                 strRoles.forEach(role -> {
                     switch (role) {
                         case "ROLE_ADMIN":
                             Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    .orElseThrow(() -> new RuntimeException(messages.getMessage("role.get.error.not-found", null, null)));
                             roles.add(adminRole);
                             break;
                         case "ROLE_LECTURER":
                             Role modRole = roleRepository.findByName(ERole.ROLE_LECTURER)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    .orElseThrow(() -> new RuntimeException(messages.getMessage("role.get.error.not-found", null, null)));
                             roles.add(modRole);
                             break;
                         case "ROLE_STUDENT":
                             Role cusRole = roleRepository.findByName(ERole.ROLE_STUDENT)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    .orElseThrow(() -> new RuntimeException(messages.getMessage("role.get.error.not-found", null, null)));
                             roles.add(cusRole);
                             break;
                     }
@@ -107,14 +109,14 @@ public class UserServiceImpl implements UserService {
             Iterator<UserInfoSummary> iterable = userInfoSummaries.stream().iterator();
             return iterable.next();
         } else {
-            throw new NotFoundException("Not found username " + username);
+            throw new NotFoundException(String.format(messages.getMessage("user.get.error.not-found.username", null, null), username));
         }
     }
 
     @Override
     public Collection<Role> getListRoles(List<ERole> roles) {
         if(roles.isEmpty()) {
-            throw new ServiceException("List role need to be got equal is 0");
+            throw new ServiceException(messages.getMessage("role.list.error.not-found", null, null));
         } else {
             return roleRepository.findRolesByNameIn(roles);
         }
