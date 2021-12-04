@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:14.1-alpine3.15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "testmaker_dev"
+    volumes:
+      - ./custom/mount:/var/lib/postgresql/data
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
