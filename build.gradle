@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.4'
+	id 'org.springframework.boot' version '2.3.12.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
@@ -22,7 +22,10 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'org.flywaydb:flyway-core:8.1.0'
+	implementation 'org.flywaydb:flyway-core:6.5.7'
+	implementation 'org.springframework.cloud:spring-cloud-stream:3.0.13.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.0.13.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka:3.0.13.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
