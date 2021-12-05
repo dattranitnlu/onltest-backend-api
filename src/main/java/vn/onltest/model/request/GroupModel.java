@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @ApiModel(value = "Group Creation Request")
 public class GroupModel {
+    private long id;
+
     @NotNull
     @Size(min = 2, max = 50)
     private String name;
