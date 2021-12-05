@@ -1,6 +1,6 @@
 package vn.onltest.util;
 
-public class PreprocessingUtils {
+public class PreprocessingUtil {
     public static String getGenderWithProp(String gender) {
         gender = gender.trim();
         if(gender.compareTo("") == 0 || gender == null)

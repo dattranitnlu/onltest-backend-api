@@ -10,7 +10,7 @@ public class GroupListener {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String msg) {
-        kafkaTemplate.send("test", msg);
+        kafkaTemplate.send(ActionConstants.GET, msg);
     }
 
     @KafkaListener(topics = ActionConstants.GET, groupId = "group-id")
