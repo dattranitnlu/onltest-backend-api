@@ -15,7 +15,7 @@ import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.service.QuestionService;
 import vn.onltest.util.PathUtil;
-import vn.onltest.util.SwaggerUtil;
+import vn.onltest.util.ServerResponseUtil;
 
 import javax.validation.Valid;
 
@@ -29,12 +29,12 @@ public class QuestionController {
 
     @ApiOperation(value = "Tạo một câu hỏi", response = BaseResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
     public AbstractResponse createQuestion(@Valid @RequestBody Question questionRequest,

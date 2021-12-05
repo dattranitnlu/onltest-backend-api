@@ -20,7 +20,7 @@ import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.TestService;
 import vn.onltest.service.TestingDetailService;
 import vn.onltest.util.PathUtil;
-import vn.onltest.util.SwaggerUtil;
+import vn.onltest.util.ServerResponseUtil;
 
 import java.security.Principal;
 
@@ -37,12 +37,12 @@ public class TestController {
 
     @ApiOperation(value = "Lấy danh sách bài kiểm tra", response = PagingResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @GetMapping
     public AbstractResponse getTestsByStudentId(Principal principal,
@@ -64,12 +64,12 @@ public class TestController {
 
     @ApiOperation(value = "Lấy nội dung một bài kiểm tra bằng ID", response = PagingResultResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @GetMapping("{testId}")
     public AbstractResponse listContentTestByTestId(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -77,7 +77,7 @@ public class TestController {
                                                     @RequestParam(name = "testCode", required = false) String testCode,
                                                     @PathVariable long testId) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("testOrder").ascending());
-        Page<TestingDetailListView> resultPage = testingDetailService.listAllQuestionInExam(testId, testCode, pageable);
+        Page<TestingDetailListView> resultPage = testingDetailService.listAllQuestionInExam(testId, testCode.trim(), pageable);
 
         return new PagingResultResponse<>(
                 HttpStatus.OK.value(),

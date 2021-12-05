@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.service.UserService;
 import vn.onltest.util.PathUtil;
-import vn.onltest.util.SwaggerUtil;
+import vn.onltest.util.ServerResponseUtil;
 
 import javax.validation.Valid;
 
@@ -30,12 +30,12 @@ public class JwtAuthenticationController {
 
     @ApiOperation(value = "Đăng nhập", response = JwtTokenResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-            @ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-            @ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-            @ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @PostMapping("{name}")
     public JwtTokenResponse<?> createAuthenticatedToken(@PathVariable String name,
@@ -45,7 +45,7 @@ public class JwtAuthenticationController {
             throw new CustomMethodArgumentNotValidException(bindingResult);
         } else {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(jwtTokenRequest.getUsername(),
+                    new UsernamePasswordAuthenticationToken(jwtTokenRequest.getUsername().trim(),
                             jwtTokenRequest.getPassword())
             );
 

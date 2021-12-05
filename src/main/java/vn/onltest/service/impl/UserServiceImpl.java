@@ -33,20 +33,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(AbstractUserRequest userRequest) {
-        User localUser = userRepository.findByEmail(userRequest.getEmail());
+        User localUser = userRepository.findByEmail(userRequest.getEmail().trim());
         if (localUser != null) {
-            throw new ServiceException(String.format(messages.getMessage("user.create.error.mail-existed", null, null), localUser.getEmail()));
+            throw new ServiceException(String.format(messages.getMessage("user.create.error.mail-existed", null, null), localUser.getEmail().trim()));
         } else {
             String salt = BCrypt.gensalt();
-            localUser = new User(userRequest.getUsername(),
+            localUser = new User(
+                    userRequest.getUsername().trim(),
                     BCrypt.hashpw(userRequest.getPassword(), salt),
-                    userRequest.getEmail(),
-                    userRequest.getFullName(),
-                    userRequest.getPhone(),
-                    userRequest.getAddress(),
+                    userRequest.getEmail().trim(),
+                    userRequest.getFullName().trim(),
+                    userRequest.getPhone().trim(),
+                    userRequest.getAddress().trim(),
                     StatusConstant.ACTIVATION,
                     userRequest.getDateOfBirth(),
-                    userRequest.getGender());
+                    userRequest.getGender().trim()
+            );
             Set<String> strRoles = userRequest.getRoles();
             Set<Role> roles = new HashSet<>();
 
@@ -84,12 +86,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findExistedUserByUsername(String username) {
-        return userRepository.findByUsernameAndIsDeleted(username, DeleteStatusConstant.NOT_DELETED);
+        return userRepository.findByUsernameAndIsDeleted(username.trim(), DeleteStatusConstant.NOT_DELETED);
     }
 
     @Override
     public List<User> findByEmailAndStatus(String email, int status) {
-        return userRepository.findByEmailAndStatus(email, status)
+        return userRepository.findByEmailAndStatus(email.trim(), status)
                 .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
     }
@@ -100,7 +102,7 @@ public class UserServiceImpl implements UserService {
                                                int status,
                                                int isDeleted) {
         Collection<UserInfoSummary> userInfoSummaries = userRepository.findByUsernameAndRolesInAndStatusAndIsDeleted(
-                username,
+                username.trim(),
                 roles,
                 status,
                 isDeleted
@@ -131,6 +133,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_LECTURER));
+        query = query.trim();
         return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, DeleteStatusConstant.NOT_DELETED, roles, pageable);
     }
 
@@ -143,14 +146,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable) {
         Collection<Role> roles = this.getListRoles(Collections.singletonList(ERole.ROLE_STUDENT));
+        query = query.trim();
         return userRepository.findByUsernameLikeOrFullNameLikeOrEmailLikeOrPhoneLikeAndIsDeletedAndRolesIn(query, query, query, query, DeleteStatusConstant.NOT_DELETED, roles, pageable);
     }
 
     @Override
     public int setIsDeletedForUser(int isDeleted, String username) {
-        User localUser = userRepository.findByUsernameAndIsDeleted(username, DeleteStatusConstant.NOT_DELETED);
+        User localUser = userRepository.findByUsernameAndIsDeleted(username.trim(), DeleteStatusConstant.NOT_DELETED);
         if(localUser != null) {
-            return userRepository.setIsDeletedFor(isDeleted, username);
+            return userRepository.setIsDeletedFor(isDeleted, username.trim());
         }
         return -1;
     }
@@ -168,6 +172,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoSummary getUserInfoWithRole(String username, String nameURL) {
         List<ERole> listEnumRoles = null;
+        nameURL = nameURL.trim();
         if (nameURL.compareToIgnoreCase("student") == 0) {
             listEnumRoles = Collections.singletonList(ERole.ROLE_STUDENT);
         } else if (nameURL.compareToIgnoreCase("admin") == 0) {
@@ -178,7 +183,7 @@ public class UserServiceImpl implements UserService {
 
         Collection<Role> roles = getListRoles(listEnumRoles);
 
-        return findUserInfoSummary(username, roles, StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED);
+        return findUserInfoSummary(username.trim(), roles, StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED);
     }
 
     /**

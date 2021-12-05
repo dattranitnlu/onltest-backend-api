@@ -26,7 +26,7 @@ import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.SubjectService;
 import vn.onltest.util.PathUtil;
-import vn.onltest.util.SwaggerUtil;
+import vn.onltest.util.ServerResponseUtil;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/subjects")
@@ -38,12 +38,12 @@ public class SubjectController {
 
 	@ApiOperation(value = "Lấy danh sách những môn học", response = PagingResultResponse.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-			@ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-			@ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-			@ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-			@ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-			@ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+			@ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+			@ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+			@ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+			@ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+			@ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+			@ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
 	})
 	@GetMapping("list")
     public AbstractResponse getSubjectsIsExisted(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -56,7 +56,7 @@ public class SubjectController {
 			resultPage = subjectService.getSubjectsIsExistedWithPagination(pageable);
 		}
 		else {
-			resultPage = subjectService.getSubjectsIsExistedWithQueryAndPagination(query, pageable);
+			resultPage = subjectService.getSubjectsIsExistedWithQueryAndPagination(query.trim(), pageable);
 		}
 
 		return new PagingResultResponse<>(
@@ -68,12 +68,12 @@ public class SubjectController {
 
 	@ApiOperation(value = "Lấy danh sách những môn học (Không phân trang)", response = BaseResultResponse.class)
 	@ApiResponses(value = {
-			@ApiResponse(code = SwaggerUtil.SUCCEED_CODE, message = SwaggerUtil.STATUS_200_MESSAGE),
-			@ApiResponse(code = SwaggerUtil.BAD_REQUEST_CODE, message = SwaggerUtil.STATUS_400_REASON),
-			@ApiResponse(code = SwaggerUtil.UNAUTHORIZED_CODE, message = SwaggerUtil.STATUS_401_REASON),
-			@ApiResponse(code = SwaggerUtil.NOT_ALLOWED_CODE, message = SwaggerUtil.STATUS_403_REASON),
-			@ApiResponse(code = SwaggerUtil.NOT_FOUND_DATA_CODE, message = SwaggerUtil.STATUS_404_REASON),
-			@ApiResponse(code = SwaggerUtil.INTERNAL_SERVER_ERROR_CODE, message = SwaggerUtil.STATUS_500_REASON)
+			@ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+			@ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+			@ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+			@ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+			@ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+			@ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
 	})
 	@GetMapping
 	public AbstractResponse getSubjectsIsExistedNotPagination() {

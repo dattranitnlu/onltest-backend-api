@@ -1,6 +1,6 @@
 package vn.onltest.util;
 
-public class SwaggerUtil {
+public class ServerResponseUtil {
     /**
      * This means that requests is successfully.
      */
