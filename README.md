@@ -21,6 +21,7 @@ Pre-conditions:
 - IDE: IntelliJ IDEA Ultimate(recommended) or eclipse,...
 - Database: [PostgreSQL](https://www.postgresql.org/download/) (recommended version 12.x)
 - Libraries: [lombok](https://projectlombok.org/)
+- Migration: [Flyway](https://flywaydb.org/)
 
 ### Clone repo
 
@@ -33,39 +34,43 @@ git clone https://github.com/hetsotchet12345/onltest-backend-api.git
 ### Such as application-dev.properties, application.properties,...)
 
 ```text
-
 # ===============================
 # = DATA SOURCE
 # ===============================
 # Set here configurations for the database connection
-spring.datasource.url=jdbc:postgresql://<host>:<port_number>/<database_name>
-# Username and secret
-spring.datasource.username=<db_username>
-spring.datasource.password=<db_password>
+spring:
+  datasource:
+    url: jdbc:postgresql://<host>:<port_number>/<database_name>
+    username: <db_username>
+    password: <db_password>
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  sql:
+    init:
+      continue-on-error: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  flyway:
+    locations: classpath:dev/db/migration
+    encoding: UTF-8
+    url: jdbc:postgresql://<host>:<port_number>/testmaker_dev
+    user: <db_username>
+    password: <db_password>
 
-# Allows Hibernate to generate SQL optimized for a particular DBMS
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.sql.init.continue-on-error=true
-
-# Keep the connection alive if idle for a long time (needed in production)
-spring.datasource.dbcp.test-while-idle=true
-spring.datasource.dbcp.validation-query= SELECT 1
-# ===============================
-# = JPA / HIBERNATE
-# ===============================
-# Use spring.jpa.properties.* for Hibernate native properties (the prefix is
-# stripped before adding them to the entity manager).
-# Show or not log for each sql query
-spring.jpa.show-sql=true
-# Hibernate ddl auto (create, create-drop, update): with "update" the database
-# schema will be automatically updated accordingly to java entities found in
-# the project
-spring.jpa.hibernate.ddl-auto=update
-
-################################################################################
-jwt.signing.key.secret=<your_secret_for_jwt>
-jwt.http.request.header=Authorization
-jwt.token.expiration.in.seconds=604800
+jwt:
+  signing:
+    key:
+      secret: mySecret
+  http:
+    request:
+      header: Authorization
+  token:
+    expiration:
+      in:
+        seconds: 604800
 
 ```
 
