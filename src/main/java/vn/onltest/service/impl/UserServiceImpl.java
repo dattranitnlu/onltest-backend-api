@@ -90,6 +90,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findActivatedUserByUsername(String username) {
+        Optional<User> result = userRepository.findByUsernameAndStatusAndIsDeleted(username.trim(), StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED);
+        return result.get();
+    }
+
+    @Override
     public List<User> findByEmailAndStatus(String email, int status) {
         return userRepository.findByEmailAndStatus(email.trim(), status)
                 .map(Collections::singletonList)
