@@ -24,12 +24,20 @@ public interface UserService {
     User createUser(AbstractUserRequest userRequest);
 
     /**
-     * find user by username
+     * find existed user by username
      *
      * @param username
      * @return User
      */
     User findExistedUserByUsername(String username);
+
+    /**
+     * find actived user by username
+     *
+     * @param username
+     * @return User
+     */
+    User findActivatedUserByUsername(String username);
 
     /**
      * List users by email and status

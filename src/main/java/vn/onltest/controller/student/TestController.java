@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.response.AbstractResponse;
+import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.TestService;
-import vn.onltest.service.TestingDetailService;
 import vn.onltest.util.PathUtil;
 import vn.onltest.util.ServerResponseUtil;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/students/tests")
@@ -31,9 +32,6 @@ import java.security.Principal;
 @Api(tags = "Test")
 public class TestController {
     private final TestService testService;
-//    private final TestResultService testResultService;
-    private final TestingDetailService testingDetailService;
-//    private final AnswerSheetService answerSheetService;
 
     @ApiOperation(value = "Lấy danh sách bài kiểm tra", response = PagingResultResponse.class)
     @ApiResponses(value = {
@@ -72,17 +70,25 @@ public class TestController {
             @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @GetMapping("{testId}")
-    public AbstractResponse listContentTestByTestId(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                    @RequestParam(name = "size", required = false, defaultValue = "3") int size,
-                                                    @RequestParam(name = "testCode", required = false) String testCode,
-                                                    @PathVariable long testId) {
+    public AbstractResponse listContentTestByTestId(
+            Principal principal,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "3") int size,
+            @PathVariable long testId
+    ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("testOrder").ascending());
-        Page<TestingDetailListView> resultPage = testingDetailService.listAllQuestionInExam(testId, testCode.trim(), pageable);
+        Page<TestingDetailListView> resultPage = testService.listAllQuestionInExam(testId, principal.getName(), pageable);
 
         return new PagingResultResponse<>(
                 HttpStatus.OK.value(),
                 resultPage.getContent(),
                 new PageInfo(page, size, resultPage.getTotalElements(), resultPage.getTotalPages())
         );
+    }
+
+    @GetMapping("testCode")
+    public AbstractResponse listTestCodeByTestId(@RequestParam long testId) {
+        List<String> result = testService.getTestCodeOfATest(testId);
+        return new BaseResultResponse<>(HttpStatus.OK.value(), result);
     }
 }
