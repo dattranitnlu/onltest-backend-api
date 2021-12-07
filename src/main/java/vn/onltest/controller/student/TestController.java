@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.response.AbstractResponse;
+import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.TestService;
@@ -23,6 +24,7 @@ import vn.onltest.util.PathUtil;
 import vn.onltest.util.ServerResponseUtil;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/students/tests")
@@ -84,5 +86,11 @@ public class TestController {
                 resultPage.getContent(),
                 new PageInfo(page, size, resultPage.getTotalElements(), resultPage.getTotalPages())
         );
+    }
+
+    @GetMapping("testCode")
+    public AbstractResponse listTestCodeByTestId(@RequestParam long testId) {
+        List<String> result = testService.getTestCodeOfATest(testId);
+        return new BaseResultResponse<>(HttpStatus.OK.value(), result);
     }
 }

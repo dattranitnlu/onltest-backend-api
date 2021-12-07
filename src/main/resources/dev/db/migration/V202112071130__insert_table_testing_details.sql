@@ -1,0 +1,15 @@
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (1, 1, 'B01', 1, 1);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (2, 2, 'B01', 1, 4);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (3, 3, 'B01', 1, 3);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (4, 4, 'B01', 1, 2);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (5, 5, 'B01', 1, 5);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (6, 1, 'B02', 1, 1);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (7, 2, 'B02', 1, 2);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (8, 3, 'B02', 1, 3);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (9, 4, 'B02', 1, 4);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (10, 5, 'B02', 1, 5);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (11, 1, 'B03', 1, 4);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (12, 2, 'B03', 1, 3);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (13, 3, 'B03', 1, 2);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (14, 4, 'B03', 1, 1);
+INSERT INTO public.testing_details (id, test_order, test_code, test_id, question_id) VALUES (15, 5, 'B03', 1, 5);
