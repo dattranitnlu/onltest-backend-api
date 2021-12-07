@@ -19,6 +19,8 @@ public class TestingResult implements Serializable {
 
     private double grade;
 
+    private String testCode;
+
     @Column(columnDefinition = "SMALLINT default 1", nullable = false)
     private int status; // 1: active, 0: inactive
 
