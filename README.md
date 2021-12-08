@@ -26,12 +26,23 @@ Pre-conditions:
 ### Clone repo
 
 ``` bash
-git clone https://github.com/hetsotchet12345/onltest-backend-api.git
+git clone https://gitlab.com/test-maker-team/test-maker-api.git
 ```
 
-### Create environment file with application-<env_name>.properties in <project>/src/main/resources/
+### Go to folder
 
-### Such as application-dev.properties, application.properties,...)
+``` bash
+cd test-maker-api/
+```
+
+### Pull images and run as containers for project(database, cache, message queue,...)
+``` bash
+docker-compose up -d
+```
+
+### Create environment file with application-<env_name>.yml in <project>/src/main/resources/
+
+### Such as application-dev.yml, application.yml,...
 
 ```text
 # ===============================
@@ -75,7 +86,7 @@ jwt:
 ```
 
 <p align="center">
-    <img src="/src/main/resources/static/images/image_env_file.PNG" alt="Illustration for creating env files">
+    <img src="/src/main/resources/static/images/image_env_file.png" alt="Illustration for creating env files">
 </p>
 
 ### Choose environment to run project
