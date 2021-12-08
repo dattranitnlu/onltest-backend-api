@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Component
 @AllArgsConstructor
-public class StartupListener  implements ApplicationRunner {
+public class StartupListener implements ApplicationRunner {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String msg) {
@@ -20,9 +20,9 @@ public class StartupListener  implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 1000; i++) {
-            sendMessage("Now: " + new Date());
-            Thread.sleep(3000);
-        }
+//        for (int i = 0; i < 1000; i++) {
+//            sendMessage("Now: " + new Date());
+//            Thread.sleep(3000);
+//        }
     }
 }
