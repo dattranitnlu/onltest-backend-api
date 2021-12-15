@@ -16,6 +16,7 @@ import vn.onltest.repository.TestingDetailRepository;
 import vn.onltest.repository.TestingResultRepository;
 import vn.onltest.service.TestService;
 import vn.onltest.service.UserService;
+import vn.onltest.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +66,7 @@ public class TestServiceImpl implements TestService {
 
                 // Random a test code for student
                 List<String> listTestCode = getTestCodeOfATest(testId);
-                randomTestCode = randomTestCode(listTestCode);
+                randomTestCode = RandomUtil.randomTestCode(listTestCode);
                 testingResult.setTestCode(randomTestCode);
 
                 // Set this test
@@ -85,11 +86,5 @@ public class TestServiceImpl implements TestService {
             throw new NotFoundException(String.format(messages.getMessage("test.get.error.not-found", null, null), testId));
         }
 
-    }
-
-    private String randomTestCode(List<String> listTestCode) {
-        Random random = new Random();
-        int indexTestCode = random.nextInt(listTestCode.size());
-        return listTestCode.get(indexTestCode);
     }
 }

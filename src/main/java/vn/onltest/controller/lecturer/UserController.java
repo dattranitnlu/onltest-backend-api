@@ -1,4 +1,4 @@
-package vn.onltest.controller.user;
+package vn.onltest.controller.lecturer;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +16,6 @@ import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.projection.UserListViewForForm;
 import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;
-import vn.onltest.model.response.error.BaseErrorResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
@@ -32,31 +31,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/users")
-@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER') or hasRole('SUPER_ADMIN')")
 @AllArgsConstructor
 @Api(tags = "User")
 public class UserController {
     private final UserService userService;
-
-    @ApiOperation(value = "Tạo một tài khoản admin, giáo viên", response = BaseResultResponse.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
-            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
-            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
-            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
-            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
-    })
-    @PostMapping("create")
-    public AbstractResponse createUser(@Valid @RequestBody RegisterAdminRequest userRequest,
-                                                   BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
-        if (bindingResult.hasErrors()) {
-            throw new CustomMethodArgumentNotValidException(bindingResult);
-        } else {
-            User createdUser = userService.createUser(userRequest);
-            return new BaseResultResponse<>(HttpStatus.OK.value(), createdUser);
-        }
-    }
 
     @ApiOperation(value = "Lấy danh sách giáo viên", response = PagingResultResponse.class)
     @ApiResponses(value = {
@@ -154,27 +133,5 @@ public class UserController {
         return new BaseResultResponse<>(HttpStatus.OK.value(), responseData);
     }
 
-    @ApiOperation(value = "Xóa một giáo viên bằng ID", response = BaseResultResponse.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
-            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
-            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
-            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
-            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
-            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
-    })
-    @DeleteMapping("delete/{username}")
-    public AbstractResponse deleteLecturerById(@PathVariable String username) {
-        int recordAfterDeleted = userService.setIsDeletedForUser(1, username);
-        if (recordAfterDeleted == 1) {
-            return new BaseResultResponse<>(
-                    HttpStatus.OK.value(),
-                    "User has username = " + username + " was be deleted.");
-        }
-
-        return new BaseErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                "User has username = " + username + " was not found for deleting. Nothing will be done!");
-    }
 }
 
