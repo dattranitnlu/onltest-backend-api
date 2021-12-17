@@ -1,4 +1,4 @@
-package vn.onltest.controller.user;
+package vn.onltest.controller.lecturer;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/questions")
-@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER') or hasRole('SUPER_ADMIN')")
 @AllArgsConstructor
 @Api(tags = "Question")
 public class QuestionController {

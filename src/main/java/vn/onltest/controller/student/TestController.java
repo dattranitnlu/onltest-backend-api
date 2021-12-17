@@ -73,7 +73,7 @@ public class TestController {
     public AbstractResponse listContentTestByTestId(
             Principal principal,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "3") int size,
+            @RequestParam(name = "size", required = false, defaultValue = "1") int size,
             @PathVariable long testId
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("testOrder").ascending());
