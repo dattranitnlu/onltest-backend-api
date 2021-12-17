@@ -1,4 +1,4 @@
-package vn.onltest.controller.user;
+package vn.onltest.controller.lecturer;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import vn.onltest.util.ServerResponseUtil;
 
 @RestController
 @RequestMapping(PathUtil.BASE_PATH + "/subjects")
-@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER') or hasRole('SUPER_ADMIN')")
 @AllArgsConstructor
 @Api(tags = "Subject")
 public class SubjectController {
