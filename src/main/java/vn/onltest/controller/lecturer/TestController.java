@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.onltest.entity.Test;
-import vn.onltest.entity.User;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
-import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.request.TestModelRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
@@ -48,8 +46,8 @@ public class TestController {
         if (bindingResult.hasErrors()) {
             throw new CustomMethodArgumentNotValidException(bindingResult);
         } else {
-            Test createdUser = testService.createTest(testRequest);
-            return new BaseResultResponse<>(HttpStatus.OK.value(), test);
+            Test createdTest = testService.createTest(testRequest);
+            return new BaseResultResponse<>(HttpStatus.OK.value(), createdTest);
         }
     }
 }
