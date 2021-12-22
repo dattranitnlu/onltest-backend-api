@@ -17,7 +17,7 @@ Installation
 ------------
 
 Pre-conditions:
-- JDK: [Oracle JDK version 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+- JDK: [Oracle JDK version 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
 - IDE: IntelliJ IDEA Ultimate(recommended) or eclipse,...
 - Database: [PostgreSQL](https://www.postgresql.org/download/) (recommended version 12.x)
 - Libraries: [lombok](https://projectlombok.org/)
