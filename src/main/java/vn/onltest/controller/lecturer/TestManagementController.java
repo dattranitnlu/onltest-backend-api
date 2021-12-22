@@ -28,7 +28,7 @@ import javax.validation.Valid;
 @PreAuthorize("hasRole('ADMIN') or hasRole('LECTURER') or hasRole('SUPER_ADMIN')")
 @AllArgsConstructor
 @Api(tags = "Tests Management")
-public class TestController {
+public class TestManagementController {
     private TestService testService;
 
     @ApiOperation(value = "Tạo một bài kiểm tra", response = BaseResultResponse.class)
