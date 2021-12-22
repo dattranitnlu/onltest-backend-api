@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import vn.onltest.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
+import vn.onltest.model.request.TestModelRequest;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface TestService {
 
     @Transactional
     Page<TestingDetailListView> listAllQuestionInExam(long testId, String username, Pageable pageable);
+
+    @Transactional
+    Test createTest(TestModelRequest testModelRequest);
 }

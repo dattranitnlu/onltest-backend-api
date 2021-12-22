@@ -5,12 +5,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vn.onltest.entity.Subject;
 import vn.onltest.entity.Test;
 import vn.onltest.entity.TestingResult;
 import vn.onltest.entity.User;
 import vn.onltest.entity.constant.StatusConstant;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.TestingDetailListView;
+import vn.onltest.model.request.TestModelRequest;
+import vn.onltest.repository.SubjectRepository;
 import vn.onltest.repository.TestRepository;
 import vn.onltest.repository.TestingDetailRepository;
 import vn.onltest.repository.TestingResultRepository;
@@ -20,7 +23,6 @@ import vn.onltest.util.RandomUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +30,7 @@ public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final TestingDetailRepository testingDetailRepository;
     private final TestingResultRepository testingResultRepository;
+    private final SubjectRepository subjectRepository;
     private final UserService userService;
     private final MessageSource messages;
 
@@ -86,5 +89,28 @@ public class TestServiceImpl implements TestService {
             throw new NotFoundException(String.format(messages.getMessage("test.get.error.not-found", null, null), testId));
         }
 
+    }
+
+    @Override
+    public Test createTest(TestModelRequest testModelRequest) {
+        testModelRequest.setTitle(testModelRequest.getTitle().trim());
+        testModelRequest.setDescription(testModelRequest.getDescription().trim());
+        testModelRequest.setSubjectName(testModelRequest.getSubjectName().trim());
+
+        Test createdTest = new Test();
+        createdTest.setTitle(testModelRequest.getTitle());
+        createdTest.setDescription(testModelRequest.getDescription());
+        createdTest.setStartDate(testModelRequest.getStartDate());
+        createdTest.setEndDate(testModelRequest.getEndDate());
+        createdTest.setDuration(testModelRequest.getDuration());
+
+        Subject subject = subjectRepository.findByCourseName(testModelRequest.getSubjectName());
+        if(subject != null) {
+            createdTest.setSubject(subject);
+        } else {
+            throw new NotFoundException(String.format(messages.getMessage("subject.get.error.not-found", null, null), testModelRequest.getSubjectName()));
+        }
+
+        return testRepository.save(createdTest);
     }
 }

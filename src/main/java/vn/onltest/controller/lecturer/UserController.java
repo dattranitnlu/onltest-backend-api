@@ -10,11 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import vn.onltest.entity.User;
-import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.projection.UserListViewForForm;
-import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
@@ -22,11 +19,9 @@ import vn.onltest.model.response.success.PagingResultResponse;
 import vn.onltest.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import vn.onltest.util.PathUtil;
 import vn.onltest.util.ServerResponseUtil;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
