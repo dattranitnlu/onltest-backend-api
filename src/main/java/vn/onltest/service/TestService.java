@@ -11,13 +11,43 @@ import java.util.List;
 
 public interface TestService {
 
+    /**
+     * Query tests (pagination)
+     *
+     * @param username: input to username
+     * @param query:    input to search
+     * @param pageable: some info to pagination
+     * @return Page<Test>
+     */
+    @Transactional(readOnly = true)
     Page<Test> getTestsWithQuery(String username, String query, Pageable pageable);
 
+    /**
+     * Get test code by test id
+     *
+     * @param testId: input to testId
+     * @return List<String>
+     */
+    @Transactional(readOnly = true)
     List<String> getTestCodeOfATest(long testId);
 
+    /**
+     * List all questions of a exam for student
+     *
+     * @param testId:   input to testId
+     * @param username: input to username student
+     * @param pageable: some info to pagination
+     * @return Page<TestingDetailListView>
+     */
     @Transactional
     Page<TestingDetailListView> listAllQuestionInExam(long testId, String username, Pageable pageable);
 
+    /**
+     * Create a test
+     *
+     * @param testModelRequest: input some fields for creating test
+     * @return Page<TestingDetailListView>
+     */
     @Transactional
     Test createTest(TestModelRequest testModelRequest);
 }
