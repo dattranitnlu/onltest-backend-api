@@ -69,7 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final String[] PRIVATE_URLS = {
                 "/client/**",
                 "api/v1/users/**",
-                "api/v1/students/**"
+                "api/v1/students/**",
+                "api/v1/admin/users/**"
         };
 
         httpSecurity.cors()

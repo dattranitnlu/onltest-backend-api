@@ -46,7 +46,7 @@ public interface TestService {
      * Create a test
      *
      * @param testModelRequest: input some fields for creating test
-     * @return Page<TestingDetailListView>
+     * @return Test
      */
     @Transactional
     Test createTest(TestModelRequest testModelRequest);
