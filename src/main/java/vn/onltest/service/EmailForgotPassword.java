@@ -1,9 +1,10 @@
 package vn.onltest.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class EmailForgotPassword {
-    @Autowired
-    private JavaMailSender emailSender;
+    private final JavaMailSenderImpl emailSender;
 
     Map<String, String> propertyModel = new HashMap<>();
 
