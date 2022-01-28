@@ -21,6 +21,8 @@ import vn.onltest.service.TestService;
 import vn.onltest.service.UserService;
 import vn.onltest.util.RandomUtil;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +68,11 @@ public class TestServiceImpl implements TestService {
                 TestingResult testingResult = new TestingResult();
                 testingResult.setGrade(0);
                 testingResult.setStatus(StatusConstant.ACTIVATION);
+
+                Calendar date = Calendar.getInstance();
+                long timeInSecs = date.getTimeInMillis();
+                Date timeAfterAdding = new Date(timeInSecs + (local.getDuration() * 60 * 1000));
+                testingResult.setFinishTime(timeAfterAdding);
 
                 // Random a test code for student
                 List<String> listTestCode = getTestCodeOfATest(testId);

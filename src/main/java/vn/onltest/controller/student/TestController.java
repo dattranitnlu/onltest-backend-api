@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.entity.Test;
+import vn.onltest.entity.TestingResult;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
@@ -90,5 +91,21 @@ public class TestController {
     public AbstractResponse listTestCodeByTestId(@RequestParam long testId) {
         List<String> result = testService.getTestCodeOfATest(testId);
         return new BaseResultResponse<>(HttpStatus.OK.value(), result);
+    }
+
+    @ApiOperation(value = "B dau tinh gio lam bai một bài kiểm tra bằng ID", response = PagingResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
+    })
+    @PostMapping("{testId}")
+    public AbstractResponse startDoingTest(Principal principal, @PathVariable long testId) {
+//        TestingResult testingResult =
+        return new BaseResultResponse<>(
+                HttpStatus.OK.value(), "Started time for doing exam");
     }
 }
