@@ -5,18 +5,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vn.onltest.entity.Subject;
-import vn.onltest.entity.Test;
-import vn.onltest.entity.TestingResult;
-import vn.onltest.entity.User;
+import vn.onltest.entity.*;
 import vn.onltest.entity.constant.StatusConstant;
+import vn.onltest.exception.ServiceException;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.request.TestModelRequest;
-import vn.onltest.repository.SubjectRepository;
-import vn.onltest.repository.TestRepository;
-import vn.onltest.repository.TestingDetailRepository;
-import vn.onltest.repository.TestingResultRepository;
+import vn.onltest.repository.*;
 import vn.onltest.service.TestService;
 import vn.onltest.service.UserService;
 import vn.onltest.util.RandomUtil;
@@ -33,12 +28,15 @@ public class TestServiceImpl implements TestService {
     private final TestingDetailRepository testingDetailRepository;
     private final TestingResultRepository testingResultRepository;
     private final SubjectRepository subjectRepository;
+    private final QuestionRepository questionRepository;
+    private final OptionRepository optionRepository;
+    private final AnswersSheetRepository answersSheetRepository;
     private final UserService userService;
     private final MessageSource messages;
 
     @Override
     public Page<Test> getTestsWithQuery(String username, String query, Pageable pageable) {
-        if(query.compareToIgnoreCase("not-started") == 0) {
+        if (query.compareToIgnoreCase("not-started") == 0) {
             return testRepository.findNotStartedTestsWithQuery(pageable);
         } else if (query.compareToIgnoreCase("on-going") == 0) {
             return testRepository.findOnGoingTestsWithQuery(pageable);
@@ -64,7 +62,7 @@ public class TestServiceImpl implements TestService {
 //            int existedTest = testingResultRepository.countTestingResultByTestAndStudentAndStatus(testId, username, StatusConstant.ACTIVATION);
             TestingResult localTestingResult = testingResultRepository.findTestingResultByTestAndStudentAndStatus(testId, username, StatusConstant.ACTIVATION);
 
-            if(localTestingResult == null) {
+            if (localTestingResult == null) {
                 TestingResult testingResult = new TestingResult();
                 testingResult.setGrade(0);
                 testingResult.setStatus(StatusConstant.ACTIVATION);
@@ -112,12 +110,44 @@ public class TestServiceImpl implements TestService {
         createdTest.setDuration(testModelRequest.getDuration());
 
         Subject subject = subjectRepository.findByCourseName(testModelRequest.getSubjectName());
-        if(subject != null) {
+        if (subject != null) {
             createdTest.setSubject(subject);
         } else {
             throw new NotFoundException(String.format(messages.getMessage("subject.get.error.not-found", null, null), testModelRequest.getSubjectName()));
         }
 
         return testRepository.save(createdTest);
+    }
+
+    @Override
+    public void saveAnswer(String username, long testId, long questionId, long optionId) {
+        TestingResult localTestingResult = testingResultRepository.findTestingResultByTestAndStudentAndStatus(testId, username, StatusConstant.ACTIVATION);
+        Optional<Question> question = questionRepository.findById(questionId);
+        Optional<Option> option = optionRepository.findById(optionId);
+
+        if (localTestingResult != null && question.isPresent()) {
+            AnswerSheet answerSheet = new AnswerSheet();
+            answerSheet.setTestingResult(localTestingResult);
+            answerSheet.setQuestion(question.get());
+
+            if (option.isPresent()) {
+                answerSheet.setOptionId(optionId);
+
+                if(option.get().isCorrect()) {
+                    answerSheet.setGrade(question.get().getMark());
+                } else {
+                    answerSheet.setGrade(0.0);
+                }
+            } else {
+                throw new NotFoundException(String.format(messages.getMessage("option.get.error.not-found", null, null), option.get().getId()));
+            }
+            Calendar c = Calendar.getInstance();
+            Date currentDate = c.getTime();
+            answerSheet.setChosenTime(currentDate);
+
+            answersSheetRepository.save(answerSheet);
+        } else {
+            throw new ServiceException(messages.getMessage("answer.get.error.save", null, null));
+        }
     }
 }

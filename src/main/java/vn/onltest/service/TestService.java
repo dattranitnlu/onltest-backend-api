@@ -51,4 +51,15 @@ public interface TestService {
     @Transactional
     Test createTest(TestModelRequest testModelRequest);
 
+    /**
+     *  Save answer
+     *
+     * @param username: input to username student
+     * @param testId: input to testId of student
+     * @param questionId: input to question
+     * @param optionId: input to option
+     */
+    @Transactional
+    void saveAnswer(String username, long testId, long questionId, long optionId);
+
 }

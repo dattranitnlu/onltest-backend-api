@@ -20,6 +20,8 @@ public class AnswerSheet implements Serializable {
     @Column(columnDefinition = "text")
     private String chosenAnswer;
 
+    private long optionId;
+
     private Date chosenTime;
     private double grade;
 
