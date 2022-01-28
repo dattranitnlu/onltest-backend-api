@@ -143,9 +143,15 @@ public class TestServiceImpl implements TestService {
             }
             Calendar c = Calendar.getInstance();
             Date currentDate = c.getTime();
-            answerSheet.setChosenTime(currentDate);
+            Date finishTime = localTestingResult.getFinishTime();
 
-            answersSheetRepository.save(answerSheet);
+            if(currentDate.before(finishTime)) {
+                answerSheet.setChosenTime(currentDate);
+                answersSheetRepository.save(answerSheet);
+            } else {
+                throw new ServiceException(messages.getMessage("answer.get.error.timeout", null, null));
+            }
+
         } else {
             throw new ServiceException(messages.getMessage("answer.get.error.save", null, null));
         }
