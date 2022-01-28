@@ -91,7 +91,6 @@ public class AppExceptionsHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<AbstractErrorResponse> handleMovieNotFoundException(NotFoundException exc) {
         response = new ApiErrorResponse(HttpStatus.NOT_FOUND.value(),

@@ -41,7 +41,7 @@ public class TestManagementController {
             @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
     })
     @PostMapping("create")
-    public AbstractResponse createUser(@Valid @RequestBody TestModelRequest testRequest,
+    public AbstractResponse createTest(@Valid @RequestBody TestModelRequest testRequest,
                                        BindingResult bindingResult) throws CustomMethodArgumentNotValidException {
         if (bindingResult.hasErrors()) {
             throw new CustomMethodArgumentNotValidException(bindingResult);

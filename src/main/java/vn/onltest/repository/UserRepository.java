@@ -68,4 +68,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                                                     int status,
                                                                     int isDeleted,
                                                                     Sort sort);
+
+    List<User> findAll();
 }
