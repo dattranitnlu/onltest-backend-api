@@ -37,39 +37,39 @@ public class UtilsController {
         return new BaseResultResponse<>(HttpStatus.OK.value(), "Upload file successfully");
     }
 
-    // this is api for demo
-    @GetMapping("downloadFile")
-    public ResponseEntity downloadFile() {
-        Resource file = filesStorageService.load("uploads/BookImport.xlsx");
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
-    }
-
-    @PostMapping("importUser")
-    public AbstractResponse uploadBookFile(@RequestPart(required = true) MultipartFile file) {
-        String message = "";
-        if (ExcelHelper.hasExcelFormat(file)) {
-            try {
-                fileService.importBookFromExcel(file);
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return new BaseResultResponse<>(HttpStatus.OK.value(), message);
-            } catch (Exception e) {
-                return new BaseErrorResponse(500, "Upload file failured");
-            }
-        }
-
-        return new BaseResultResponse<>(HttpStatus.OK.value(), message);
-    }
-
-    @GetMapping("exportAllUser")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=book_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-        fileService.exportAllBook(response);
-    }
+//    // this is api for demo
+//    @GetMapping("downloadFile")
+//    public ResponseEntity downloadFile() {
+//        Resource file = filesStorageService.load("uploads/BookImport.xlsx");
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+//                .body(file);
+//    }
+//
+//    @PostMapping("importUser")
+//    public AbstractResponse uploadBookFile(@RequestPart(required = true) MultipartFile file) {
+//        String message = "";
+//        if (ExcelHelper.hasExcelFormat(file)) {
+//            try {
+//                fileService.importBookFromExcel(file);
+//                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+//                return new BaseResultResponse<>(HttpStatus.OK.value(), message);
+//            } catch (Exception e) {
+//                return new BaseErrorResponse(500, "Upload file failured");
+//            }
+//        }
+//
+//        return new BaseResultResponse<>(HttpStatus.OK.value(), message);
+//    }
+//
+//    @GetMapping("exportAllUser")
+//    public void exportToExcel(HttpServletResponse response) throws IOException {
+//        response.setContentType("application/octet-stream");
+//        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+//        String currentDateTime = dateFormatter.format(new Date());
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment; filename=book_" + currentDateTime + ".xlsx";
+//        response.setHeader(headerKey, headerValue);
+//        fileService.exportAllBook(response);
+//    }
 }

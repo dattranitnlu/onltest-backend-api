@@ -22,8 +22,8 @@ public class EmailController {
     private final EmailForgotPassword emailForgotPassword;
 
     @PostMapping("/sentEmail")
-    public ResponseEntity<?> createUser() throws MessagingException, IOException {
-        emailForgotPassword.sendEmail("Dat Tran", "www.google.com", "dattranitnlu@gmail.com");
+    public ResponseEntity<?> sendEmail() throws MessagingException, IOException {
+//        emailForgotPassword.sendEmail("Dat Tran", "www.google.com", "dattranitnlu@gmail.com");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree("{\"Greeting\": \"Greetings from Spring Boot!\"}");
         return ResponseEntity.ok(json);
