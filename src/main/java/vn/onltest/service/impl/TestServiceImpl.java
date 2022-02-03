@@ -126,7 +126,7 @@ public class TestServiceImpl implements TestService {
         Optional<Option> option = optionRepository.findById(optionId);
 
         if (localTestingResult != null && question.isPresent()) {
-            AnswerSheet answerSheet = new AnswerSheet();
+            AnswerSheet answerSheet = getExistedAnswerFromDatabase(localTestingResult.getId(), questionId);
             answerSheet.setTestingResult(localTestingResult);
             answerSheet.setQuestion(question.get());
 
@@ -155,5 +155,19 @@ public class TestServiceImpl implements TestService {
         } else {
             throw new ServiceException(messages.getMessage("answer.get.error.save", null, null));
         }
+    }
+
+    /**
+     *  Getting existed answer in database
+     *
+     *  if existed -> return
+     *  else -> create a new
+     *
+     * @param testResultId: input to testId of student
+     * @param questionId: input to question
+     */
+    private AnswerSheet getExistedAnswerFromDatabase(long testResultId, long questionId) {
+        Optional<AnswerSheet> localAnswerSheet = answersSheetRepository.findByTestingResultAndAndQuestionAndOptionId(testResultId, questionId);
+        return localAnswerSheet.isPresent() ? localAnswerSheet.get() : new AnswerSheet();
     }
 }
