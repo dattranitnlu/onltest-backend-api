@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SubjectServiceImpl implements SubjectService {
+public class  SubjectServiceImpl implements SubjectService {
 	private final SubjectRepository subjectRepository;
 	
 	@Override

@@ -25,6 +25,9 @@ public class TestingResult implements Serializable {
     @Column(columnDefinition = "SMALLINT default 1", nullable = false)
     private int status; // 1: active, 0: inactive
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date finishTime;
+
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;

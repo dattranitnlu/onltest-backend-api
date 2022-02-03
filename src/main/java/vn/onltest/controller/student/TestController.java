@@ -91,4 +91,23 @@ public class TestController {
         List<String> result = testService.getTestCodeOfATest(testId);
         return new BaseResultResponse<>(HttpStatus.OK.value(), result);
     }
+
+    @ApiOperation(value = "Lưu kết quả bài làm của người làm", response = PagingResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
+    })
+    @PostMapping("saveAnswer")
+    public AbstractResponse saveAnswer(Principal principal,
+                                       @RequestParam long testId,
+                                       @RequestParam long questionId,
+                                       @RequestParam long optionId) {
+        testService.saveAnswer(principal.getName(), testId, questionId, optionId);
+        return new BaseResultResponse<>(
+                HttpStatus.OK.value(), "Saved answer successfully");
+    }
 }

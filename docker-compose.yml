@@ -60,3 +60,10 @@ services:
 #      backend:
 #        aliases:
 #          - "redis"
+#  mongo:
+#    image: mongo:latest
+#    volumes:
+#      - ../mount/mongo-data:/data/db
+#    ports:
+#      - "27017:27017"
+#    restart: always
