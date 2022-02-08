@@ -29,7 +29,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @Api(tags = "Tests Management")
 public class TestManagementController {
-    private TestService testService;
+    private final TestService testService;
 
     @ApiOperation(value = "Tạo một bài kiểm tra", response = BaseResultResponse.class)
     @ApiResponses(value = {

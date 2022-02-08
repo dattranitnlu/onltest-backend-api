@@ -39,7 +39,7 @@ public interface TestService {
      * @param pageable: some info to pagination
      * @return Page<TestingDetailListView>
      */
-    @Transactional
+    @Transactional(readOnly = true)
     Page<TestingDetailListView> listAllQuestionInExam(long testId, String username, Pageable pageable);
 
     /**
