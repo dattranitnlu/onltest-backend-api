@@ -3,7 +3,7 @@ package vn.onltest.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import vn.onltest.entity.TestingResult;
+import vn.onltest.model.entity.TestingResult;
 
 public interface TestingResultRepository extends JpaRepository<TestingResult, Long> {
 

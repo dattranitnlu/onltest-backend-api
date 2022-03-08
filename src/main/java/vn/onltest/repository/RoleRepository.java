@@ -1,7 +1,7 @@
 package vn.onltest.repository;
 
-import vn.onltest.entity.constant.ERole;
-import vn.onltest.entity.Role;
+import vn.onltest.model.entity.constant.ERole;
+import vn.onltest.model.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;

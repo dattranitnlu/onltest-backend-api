@@ -1,7 +1,7 @@
 package vn.onltest.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import vn.onltest.entity.Question;
+import vn.onltest.model.entity.Question;
 
 public interface QuestionService {
 

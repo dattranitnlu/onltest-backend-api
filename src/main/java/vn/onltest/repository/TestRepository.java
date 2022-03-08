@@ -4,9 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import vn.onltest.entity.Test;
+import vn.onltest.model.entity.Test;
 
-import java.util.Date;
 import java.util.Optional;
 
 public interface TestRepository extends JpaRepository<Test, Long> {

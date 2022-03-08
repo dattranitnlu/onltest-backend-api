@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import vn.onltest.entity.Test;
+import vn.onltest.model.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;

@@ -5,15 +5,12 @@ services:
     ports:
       - "5432:5432"
     environment:
+      PG-USER: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "root"
       POSTGRES_DB: "testmaker_dev"
     volumes:
       - ../mount/postgres-data:/var/lib/postgresql/data
-#    networks:
-#      backend:
-#        aliases:
-#          - "database"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -27,10 +24,6 @@ services:
     volumes:
       - ../mount/zk-data:/var/lib/zookeeper/data
       - ../mount/zk-txn-logs:/var/lib/zookeeper/log
-#    networks:
-#      backend:
-#        aliases:
-#          - "zookeeper"
 
   kafkaserver:
     image: wurstmeister/kafka:latest
@@ -45,10 +38,6 @@ services:
       - ../mount/kafka-data:/var/lib/kafka/data
     depends_on:
       - zookeeper
-#    networks:
-#      backend-api:
-#        aliases:
-#          - "kafka"
 
   redisserver:
     image: redis:alpine
@@ -56,10 +45,18 @@ services:
       - "6379:6379"
     volumes:
       - ../mount/redis-data:/data
-#    networks:
-#      backend:
-#        aliases:
-#          - "redis"
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ../mount/minio/minio_server:/data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: m1n1os@rv@r
+    command: server /data --console-address :9001
+    restart: always
 #  mongo:
 #    image: mongo:latest
 #    volumes:

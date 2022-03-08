@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import vn.onltest.entity.Group;
+import vn.onltest.model.entity.Group;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.request.GroupModel;
 import vn.onltest.model.response.AbstractResponse;

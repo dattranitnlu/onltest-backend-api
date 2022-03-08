@@ -1,6 +1,6 @@
 package vn.onltest.model.projection;
 
-import vn.onltest.entity.QuestionType;
+import vn.onltest.model.entity.QuestionType;
 
 import java.util.Date;
 import java.util.List;

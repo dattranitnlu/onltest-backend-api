@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.onltest.entity.Subject;
+import vn.onltest.model.entity.Subject;
 import vn.onltest.model.projection.SubjectListView;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;

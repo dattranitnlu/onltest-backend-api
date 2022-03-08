@@ -1,18 +1,69 @@
 package vn.onltest.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import io.minio.*;
+import io.minio.errors.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class FilesStorageService {
     private static final String OS = System.getProperty("os.name").toLowerCase();
+
+    @Value("${minio.bucket.name}")
+    private String defaultBucketName;
+
+    @Autowired
+    private MinioClient minioClient;
+
+    @PostConstruct
+    private void initializeMinioClient() throws Exception {
+        createBucket();
+    }
+
+    public void upload(MultipartFile file, String relativePath) {
+        try {
+            Path absolutePath = convertRelativeToAbsolutePath(relativePath);
+            File directory = new File(absolutePath.getParent().toString());
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            Files.copy(file.getInputStream(), absolutePath);
+
+            // 'minio-test'.
+            minioClient.uploadObject(
+                    UploadObjectArgs.builder()
+                            .bucket(defaultBucketName)
+                            .object(file.getOriginalFilename())
+                            .filename(absolutePath.toString())
+                            .build());
+
+            String[] entries = directory.list();
+            for (String s : entries) {
+                File currentFile = new File(directory.getPath(), s);
+                currentFile.delete();
+            }
+        } catch (MinioException e) {
+            System.out.println("Error occurred: " + e);
+            System.out.println("HTTP trace: " + e.httpTrace());
+        } catch (Exception e) {
+            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+        }
+    }
 
     private String getRootPath() throws Exception {
         if (isWindows()) {
@@ -68,5 +119,14 @@ public class FilesStorageService {
 
     private boolean isSolaris() {
         return OS.contains("sunos");
+    }
+
+    private void createBucket() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        // Make bucket if not exist.
+        boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(defaultBucketName).build());
+        if (!found) {
+            // Make a new bucket.
+            minioClient.makeBucket(MakeBucketArgs.builder().bucket(defaultBucketName).build());
+        }
     }
 }

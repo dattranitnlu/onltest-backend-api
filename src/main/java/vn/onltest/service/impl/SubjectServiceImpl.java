@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import vn.onltest.entity.Subject;
+import vn.onltest.model.entity.Subject;
 import vn.onltest.model.projection.SubjectListView;
 import vn.onltest.repository.SubjectRepository;
 import vn.onltest.service.SubjectService;

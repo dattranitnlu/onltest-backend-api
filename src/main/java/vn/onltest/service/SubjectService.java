@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.transaction.annotation.Transactional;
-import vn.onltest.entity.Subject;
+import vn.onltest.model.entity.Subject;
 import vn.onltest.model.projection.SubjectListView;
 
 import java.util.List;
