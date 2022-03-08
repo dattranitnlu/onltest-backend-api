@@ -1,28 +1,33 @@
-package vn.onltest.entity;
+package vn.onltest.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
-@Entity(name = "Options")
+@Entity(name = "AnswerSheets")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Option implements Serializable {
+public class AnswerSheet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(columnDefinition = "text")
-    private String optionContent;
+    private String chosenAnswer;
 
-    private boolean correct;
+    private long optionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    private Date chosenTime;
+    private double grade;
+
+    @ManyToOne
+    private TestingResult testingResult;
+
+    @ManyToOne
     private Question question;
 }

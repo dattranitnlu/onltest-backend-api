@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import vn.onltest.entity.User;
+import vn.onltest.model.entity.User;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.request.RegisterAdminRequest;
 import vn.onltest.model.response.AbstractResponse;

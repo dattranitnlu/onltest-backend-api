@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
-import vn.onltest.entity.User;
+import vn.onltest.model.entity.User;
 
 public class ExcelHelper {
     public static final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

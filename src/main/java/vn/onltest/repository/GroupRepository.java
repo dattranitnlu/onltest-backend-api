@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import vn.onltest.entity.Group;
-import vn.onltest.entity.Subject;
-import vn.onltest.entity.User;
+import vn.onltest.model.entity.Group;
+import vn.onltest.model.entity.Subject;
+import vn.onltest.model.entity.User;
 
 import java.util.List;
 

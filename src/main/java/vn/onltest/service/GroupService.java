@@ -3,7 +3,7 @@ package vn.onltest.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import vn.onltest.entity.Group;
+import vn.onltest.model.entity.Group;
 import vn.onltest.model.request.GroupModel;
 
 public interface GroupService {

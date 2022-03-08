@@ -3,7 +3,7 @@ package vn.onltest.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import vn.onltest.entity.Test;
+import vn.onltest.model.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.request.TestModelRequest;
 

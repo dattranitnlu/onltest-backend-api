@@ -1,7 +1,7 @@
 package vn.onltest.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import vn.onltest.entity.User;
+import vn.onltest.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
