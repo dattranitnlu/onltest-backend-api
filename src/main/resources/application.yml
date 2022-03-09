@@ -1,0 +1,44 @@
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Set here configurations for the database connection
+spring:
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testmaker?serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: postgres
+    password: root
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  sql:
+    init:
+      continue-on-error: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  flyway:
+    locations: classpath:dev/db/migration
+    encoding: UTF-8
+    url: jdbc:postgresql://localhost:5432/testmaker
+    user: postgres
+    password: root
+
+jwt:
+  signing:
+    key:
+      secret: mySecret
+  http:
+    request:
+      header: Authorization
+  token:
+    expiration:
+      in:
+        seconds: 604800
