@@ -1,25 +1,25 @@
-package vn.onltest.entity;
+package vn.onltest.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.onltest.entity.constant.ERole;
+import vn.onltest.model.entity.constant.EQuestionType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "Roles")
+@Entity(name = "QuestionTypes")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Role implements Serializable {
+public class QuestionType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
+    @Column(length = 20, unique = true)
+    private EQuestionType typeName;
 }
+
+

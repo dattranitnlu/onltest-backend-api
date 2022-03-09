@@ -2,9 +2,10 @@ package vn.onltest.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vn.onltest.entity.constant.ERole;
-import vn.onltest.entity.Role;
-import vn.onltest.entity.User;
+import org.springframework.transaction.annotation.Transactional;
+import vn.onltest.model.entity.constant.ERole;
+import vn.onltest.model.entity.Role;
+import vn.onltest.model.entity.User;
 import vn.onltest.model.projection.UserInfoSummary;
 import vn.onltest.model.projection.UserListView;
 import vn.onltest.model.projection.UserListViewForForm;
@@ -21,6 +22,7 @@ public interface UserService {
      * @param userRequest: some info for creating user
      * @return User
      */
+    @Transactional(readOnly = true)
     User createUser(AbstractUserRequest userRequest);
 
     /**
@@ -29,6 +31,7 @@ public interface UserService {
      * @param username
      * @return User
      */
+    @Transactional(readOnly = true)
     User findExistedUserByUsername(String username);
 
     /**
@@ -37,6 +40,7 @@ public interface UserService {
      * @param username
      * @return User
      */
+    @Transactional(readOnly = true)
     User findActivatedUserByUsername(String username);
 
     /**
@@ -57,6 +61,7 @@ public interface UserService {
      * @param isDeleted: integer type
      * @return UserInfoSummary
      */
+    @Transactional(readOnly = true)
     UserInfoSummary findUserInfoSummary(String username, Collection<Role> roles, int status, int isDeleted);
 
     /**
@@ -65,6 +70,7 @@ public interface UserService {
      * @param roles: list roles by String type
      * @return Collection<Role>
      */
+    @Transactional(readOnly = true)
     Collection<Role> getListRoles(List<ERole> roles);
 
     /**
@@ -73,6 +79,7 @@ public interface UserService {
      * @param pageable: some info to pagination
      * @return Page<UserListView>
      */
+    @Transactional(readOnly = true)
     Page<UserListView> getLecturersIsExistedWithPagination(Pageable pageable);
 
     /**
@@ -82,6 +89,7 @@ public interface UserService {
      * @param pageable: some info to pagination
      * @return Page<UserListView>
      */
+    @Transactional(readOnly = true)
     Page<UserListView> getLecturersIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
     /**
@@ -90,6 +98,7 @@ public interface UserService {
      * @param pageable: some info to pagination
      * @return Page<UserListView>
      */
+    @Transactional(readOnly = true)
     Page<UserListView> getStudentsIsExistedWithPagination(Pageable pageable);
 
     /**
@@ -99,6 +108,7 @@ public interface UserService {
      * @param pageable: some info to pagination
      * @return Page<UserListView>
      */
+    @Transactional(readOnly = true)
     Page<UserListView> getStudentsIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
     /**
@@ -119,6 +129,7 @@ public interface UserService {
      *
      * @return List<UserListViewForForm>
      */
+    @Transactional(readOnly = true)
     List<UserListViewForForm> getStudentsIsExistedForSelectOption();
 
     /**
@@ -130,6 +141,7 @@ public interface UserService {
      *
      * @return List<UserListViewForForm>
      */
+    @Transactional(readOnly = true)
     List<UserListViewForForm> getLecturersIsExistedForSelectOption();
 
     /**
@@ -139,5 +151,6 @@ public interface UserService {
      * @param nameURL:  name of login API's URL (such as: admin, lecturer, lecturer)
      * @return UserInfoSummary
      */
+    @Transactional(readOnly = true)
     UserInfoSummary getUserInfoWithRole(String username, String nameURL);
 }

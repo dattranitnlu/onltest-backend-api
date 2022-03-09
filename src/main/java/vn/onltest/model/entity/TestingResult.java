@@ -1,4 +1,4 @@
-package vn.onltest.entity;
+package vn.onltest.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

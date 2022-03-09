@@ -2,7 +2,7 @@ package vn.onltest.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.onltest.entity.Question;
+import vn.onltest.model.entity.Question;
 import vn.onltest.repository.QuestionRepository;
 import vn.onltest.service.QuestionService;
 

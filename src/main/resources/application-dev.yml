@@ -1,0 +1,64 @@
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Set here configurations for the database connection
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testmaker_dev?serverTimezone=UTC&sslmode=disable&useLegacyDatetimeCode=false
+    username: postgres
+    password: root
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  sql:
+    init:
+      continue-on-error: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  flyway:
+    locations: classpath:dev/db/migration
+    encoding: UTF-8
+    url: jdbc:postgresql://localhost:5432/testmaker_dev?serverTimezone=UTC&sslmode=disable&useLegacyDatetimeCode=false
+    user: postgres
+    password: root
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+      bindings:
+        input:
+          binder: kafka
+          destination: test
+          content-type: text/plain
+          group: input-group-1
+        output:
+          binder: kafka
+          destination: test
+          group: output-group-1
+          content-type: text/plain
+
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      time-to-live: 45000
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 30000
+jwt:
+  signing:
+    key:
+      secret: mySecret
+  http:
+    request:
+      header: Authorization
+  token:
+    expiration:
+      in:
+        seconds: 604800

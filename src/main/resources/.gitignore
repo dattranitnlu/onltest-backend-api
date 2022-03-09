@@ -1,4 +1,0 @@
-
-#ignored all env files.
-application*.properties
-application*.yml

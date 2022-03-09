@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.onltest.entity.Test;
+import vn.onltest.model.entity.Test;
 import vn.onltest.exception.movie.CustomMethodArgumentNotValidException;
 import vn.onltest.model.request.TestModelRequest;
 import vn.onltest.model.response.AbstractResponse;
@@ -29,7 +29,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @Api(tags = "Tests Management")
 public class TestManagementController {
-    private TestService testService;
+    private final TestService testService;
 
     @ApiOperation(value = "Tạo một bài kiểm tra", response = BaseResultResponse.class)
     @ApiResponses(value = {

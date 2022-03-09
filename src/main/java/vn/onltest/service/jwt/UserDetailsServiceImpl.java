@@ -1,7 +1,7 @@
 package vn.onltest.service.jwt;
 
 import lombok.AllArgsConstructor;
-import vn.onltest.entity.User;
+import vn.onltest.model.entity.User;
 import vn.onltest.model.response.UserDetailsImpl;
 import vn.onltest.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
