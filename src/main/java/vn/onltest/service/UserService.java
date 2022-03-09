@@ -1,5 +1,6 @@
 package vn.onltest.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -130,6 +131,7 @@ public interface UserService {
      * @return List<UserListViewForForm>
      */
     @Transactional(readOnly = true)
+    @Cacheable("studentListNotPagination")
     List<UserListViewForForm> getStudentsIsExistedForSelectOption();
 
     /**
@@ -142,6 +144,7 @@ public interface UserService {
      * @return List<UserListViewForForm>
      */
     @Transactional(readOnly = true)
+    @Cacheable("lecturerListNotPagination")
     List<UserListViewForForm> getLecturersIsExistedForSelectOption();
 
     /**

@@ -1,5 +1,6 @@
 package vn.onltest.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,5 +18,6 @@ public interface SubjectService {
     Page<Subject> getSubjectsIsExistedWithQueryAndPagination(String query, Pageable pageable);
 
     @Transactional(readOnly = true)
+    @Cacheable("subjectListNotPagination")
     List<SubjectListView> getSubjectsIsExistedNotPagination();
 }
