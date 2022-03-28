@@ -28,6 +28,7 @@ dependencies {
 	implementation 'redis.clients:jedis:3.7.0'
 	implementation 'org.apache.poi:poi:4.0.0'
 	implementation 'org.apache.poi:poi-ooxml:4.0.0'
+	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.data:spring-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'

@@ -10,10 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.model.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
+import vn.onltest.model.request.SaveAnswerRequest;
 import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
@@ -32,6 +34,7 @@ import java.util.List;
 @Api(tags = "Test")
 public class TestController {
     private final TestService testService;
+    private final KafkaTemplate<String, SaveAnswerRequest> kafkaTemplate;
 
     @ApiOperation(value = "Lấy danh sách bài kiểm tra", response = PagingResultResponse.class)
     @ApiResponses(value = {
