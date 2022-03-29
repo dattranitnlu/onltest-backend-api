@@ -19,7 +19,8 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsernameAndIsDeleted(String email, int isDeleted);
+    @Query("select u from Users u where u.username = ?1 and u.isDeleted = ?2")
+    User findByUsernameAndIsDeleted(String username, int isDeleted);
 
     User findByEmail(String email);
 

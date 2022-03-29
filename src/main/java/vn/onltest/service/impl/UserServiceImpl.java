@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.HashOperations;
 import vn.onltest.model.entity.constant.DeleteStatusConstant;
 import vn.onltest.model.entity.constant.ERole;
 import vn.onltest.model.entity.Role;
@@ -30,6 +31,10 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final MessageSource messages;
+
+    private final HashOperations<String, String, Object> hashOperations;
+
+    private static final String USER_CACHE = "USER_CACHE";
 
     @Override
     public User createUser(AbstractUserRequest userRequest) {
@@ -86,7 +91,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findExistedUserByUsername(String username) {
-        return userRepository.findByUsernameAndIsDeleted(username.trim(), DeleteStatusConstant.NOT_DELETED);
+        User cachedUser = (User) hashOperations.get(USER_CACHE, username);
+        if(cachedUser != null) {
+            return cachedUser;
+        }
+        cachedUser = userRepository.findByUsernameAndIsDeleted(username.trim(), DeleteStatusConstant.NOT_DELETED);
+        hashOperations.put(USER_CACHE, username, cachedUser);
+        return cachedUser;
     }
 
     @Override

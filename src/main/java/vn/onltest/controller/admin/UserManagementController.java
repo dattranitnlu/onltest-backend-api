@@ -29,6 +29,21 @@ import javax.validation.Valid;
 public class UserManagementController {
     private final UserService userService;
 
+    @ApiOperation(value = "Tìm kiếm một người dùng bằng username", response = BaseResultResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),
+            @ApiResponse(code = ServerResponseUtil.BAD_REQUEST_CODE, message = ServerResponseUtil.STATUS_400_REASON),
+            @ApiResponse(code = ServerResponseUtil.UNAUTHORIZED_CODE, message = ServerResponseUtil.STATUS_401_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_ALLOWED_CODE, message = ServerResponseUtil.STATUS_403_REASON),
+            @ApiResponse(code = ServerResponseUtil.NOT_FOUND_DATA_CODE, message = ServerResponseUtil.STATUS_404_REASON),
+            @ApiResponse(code = ServerResponseUtil.INTERNAL_SERVER_ERROR_CODE, message = ServerResponseUtil.STATUS_500_REASON)
+    })
+    @GetMapping("get/{username}")
+    public AbstractResponse getUserByUsername(@PathVariable String username) {
+        User result = userService.findExistedUserByUsername(username);
+        return new BaseResultResponse<>(HttpStatus.OK.value(), result);
+    }
+
     @ApiOperation(value = "Tạo một tài khoản admin, giáo viên", response = BaseResultResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = ServerResponseUtil.SUCCEED_CODE, message = ServerResponseUtil.STATUS_200_MESSAGE),

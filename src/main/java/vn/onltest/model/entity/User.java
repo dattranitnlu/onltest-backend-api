@@ -55,7 +55,7 @@ public class User implements Serializable {
     @Column(columnDefinition = "SMALLINT default 0", nullable = false, insertable = false)
     private int isDeleted;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UserRoles",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))

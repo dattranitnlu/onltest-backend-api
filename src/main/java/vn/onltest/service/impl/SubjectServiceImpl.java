@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import vn.onltest.model.entity.Subject;
+import vn.onltest.model.entity.constant.DeleteStatusConstant;
+import vn.onltest.model.entity.constant.StatusConstant;
 import vn.onltest.model.projection.SubjectListView;
 import vn.onltest.repository.SubjectRepository;
 import vn.onltest.service.SubjectService;
@@ -29,7 +31,7 @@ public class  SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public List<SubjectListView> getSubjectsIsExistedNotPagination() {
-		return subjectRepository.findAllByStatusAndIsDeleted(1, 0);
+		return subjectRepository.findAllByStatusAndIsDeleted(StatusConstant.ACTIVATION, DeleteStatusConstant.NOT_DELETED);
 	}
 
 }
