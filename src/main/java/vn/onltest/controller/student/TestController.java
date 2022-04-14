@@ -20,6 +20,7 @@ import vn.onltest.model.response.AbstractResponse;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
+import vn.onltest.model.response.success.ResultMessageResponse;
 import vn.onltest.service.TestService;
 import vn.onltest.util.PathUtil;
 import vn.onltest.util.ServerResponseUtil;
@@ -113,7 +114,7 @@ public class TestController {
         SaveAnswerRequest request = new SaveAnswerRequest(principal.getName(), testId, questionId, optionId);
 
         kafkaTemplate.send("answer", String.valueOf(request));
-        return new BaseResultResponse<>(
+        return new ResultMessageResponse(
                 HttpStatus.OK.value(), "Saved answer successfully");
     }
 }
