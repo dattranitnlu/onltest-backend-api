@@ -34,7 +34,7 @@ import java.util.List;
 @Api(tags = "Test")
 public class TestController {
     private final TestService testService;
-    private final KafkaTemplate<String, SaveAnswerRequest> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @ApiOperation(value = "Lấy danh sách bài kiểm tra", response = PagingResultResponse.class)
     @ApiResponses(value = {
@@ -109,7 +109,10 @@ public class TestController {
                                        @RequestParam long testId,
                                        @RequestParam long questionId,
                                        @RequestParam long optionId) {
-        testService.saveAnswer(principal.getName(), testId, questionId, optionId);
+//        testService.saveAnswer(principal.getName(), testId, questionId, optionId);
+        SaveAnswerRequest request = new SaveAnswerRequest(principal.getName(), testId, questionId, optionId);
+
+        kafkaTemplate.send("answer", String.valueOf(request));
         return new BaseResultResponse<>(
                 HttpStatus.OK.value(), "Saved answer successfully");
     }
