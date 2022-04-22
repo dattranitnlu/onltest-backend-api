@@ -5,6 +5,6 @@ public class PreprocessingUtil {
         gender = gender.trim();
         if(gender.compareTo("") == 0 || gender == null)
             return "N/A";
-        return (gender == "m") ? "Male": "Female";
+        return (gender.compareTo("m") == 0) ? "Male": "Female";
     }
 }
