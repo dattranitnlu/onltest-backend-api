@@ -132,6 +132,7 @@ public class TestServiceImpl implements TestService {
 
             if (option.isPresent()) {
                 answerSheet.setOptionId(optionId);
+                answerSheet.setChosenAnswer(option.get().getOptionContent());
 
                 if(option.get().isCorrect()) {
                     answerSheet.setGrade(question.get().getMark());

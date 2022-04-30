@@ -45,7 +45,7 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    @KafkaListener(topics = "answer", groupId = "answer-id")
+    @KafkaListener(topics = "answer", groupId = "group-id")
     public void listenAnswer(@Payload String data) throws JsonProcessingException {
         JsonNode jsonNode = new ObjectMapper().readTree(data);
         String username = jsonNode.get("username").asText();

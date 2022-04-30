@@ -110,11 +110,16 @@ public class TestController {
                                        @RequestParam long testId,
                                        @RequestParam long questionId,
                                        @RequestParam long optionId) {
-//        testService.saveAnswer(principal.getName(), testId, questionId, optionId);
-        SaveAnswerRequest request = new SaveAnswerRequest(principal.getName(), testId, questionId, optionId);
+        testService.saveAnswer(principal.getName(), testId, questionId, optionId);
+//        SaveAnswerRequest request = new SaveAnswerRequest(principal.getName(), testId, questionId, optionId);
 
-        kafkaTemplate.send("answer", String.valueOf(request));
+//        kafkaTemplate.send("answer", request.toString());
         return new ResultMessageResponse(
                 HttpStatus.OK.value(), "Saved answer successfully");
+    }
+
+    @GetMapping("testSonar")
+    public String getMessage() {
+        return "Hello Sonarqube";
     }
 }

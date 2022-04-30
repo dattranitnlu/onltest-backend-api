@@ -2,7 +2,35 @@ plugins {
 	id 'org.springframework.boot' version '2.3.12.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'com.avast.gradle.docker-compose' version '0.14.3'
+	id 'org.sonarqube' version '3.3'
 	id 'java'
+	id 'jacoco'
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+test.finalizedBy jacocoTestReport
+
+sonarqube {
+	properties {
+		property 'sonar.host.url', 'http://localhost:9005'
+		property "sonar.sourceEncoding", "UTF-8"
+	}
+}
+
+subprojects {
+	sonarqube {
+		properties {
+			property "sonar.sources", "src"
+		}
+	}
+}
+
+tasks.named('sonarqube').configure {
+	dependsOn test
 }
 
 group = 'vn.onltest'
@@ -44,4 +72,5 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

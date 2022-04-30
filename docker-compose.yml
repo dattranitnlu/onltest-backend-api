@@ -24,7 +24,6 @@ services:
     volumes:
       - ../mount/zk-data:/var/lib/zookeeper/data
       - ../mount/zk-txn-logs:/var/lib/zookeeper/log
-      -
   kafkaserver:
     image: wurstmeister/kafka:latest
     ports:
@@ -44,24 +43,24 @@ services:
       - "6379:6379"
     volumes:
       - ../mount/redis-data:/data
-  sonarqube:
-    image: sonarqube:lts
+#  sonarqube:
+#    image: sonarqube:lts
+#    ports:
+#      - "9007:9007"
+#    environment:
+#      - SONAR_FORCEAUTHENTICATION=false
+  minio:
+    image: minio/minio
     ports:
       - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ../mount/minio/minio_server:/data
     environment:
-      - SONAR_FORCEAUTHENTICATION=false
-#  minio:
-#    image: minio/minio
-#    ports:
-#      - "9000:9000"
-#      - "9001:9001"
-#    volumes:
-#      - ../mount/minio/minio_server:/data
-#    environment:
-#      MINIO_ACCESS_KEY: minio
-#      MINIO_SECRET_KEY: m1n1os@rv@r
-#    command: server /data --console-address :9001
-#    restart: always
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: m1n1os@rv@r
+    command: server /data --console-address :9001
+    restart: always
 #  elasticsearch:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
 #    container_name: elasticsearch
