@@ -15,8 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.model.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
-import vn.onltest.model.request.SaveAnswerRequest;
 import vn.onltest.model.response.AbstractResponse;
+import vn.onltest.model.response.custom.TestingResultData;
 import vn.onltest.model.response.success.BaseResultResponse;
 import vn.onltest.model.response.success.PageInfo;
 import vn.onltest.model.response.success.PagingResultResponse;
@@ -118,8 +118,16 @@ public class TestController {
                 HttpStatus.OK.value(), "Saved answer successfully");
     }
 
+    @Deprecated
     @GetMapping("testSonar")
     public String getMessage() {
         return "Hello Sonarqube";
     }
+
+    @GetMapping("get/grade")
+    public AbstractResponse getGradeOfStudentByStudentIdAndTestId(Principal principal, @RequestParam long testId) {
+        TestingResultData resultData = testService.getGradeOfStudentByStudentIdAndTestId(principal.getName(), testId);
+        return new BaseResultResponse<>(HttpStatus.OK.value(), resultData);
+    }
+
 }

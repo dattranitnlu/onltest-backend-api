@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.onltest.model.entity.Test;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.request.TestModelRequest;
+import vn.onltest.model.response.custom.TestingResultData;
 
 import java.util.List;
 
@@ -62,4 +63,6 @@ public interface TestService {
     @Transactional
     void saveAnswer(String username, long testId, long questionId, long optionId);
 
+    @Transactional
+    TestingResultData getGradeOfStudentByStudentIdAndTestId(String username, long testId);
 }

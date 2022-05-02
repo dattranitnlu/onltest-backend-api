@@ -12,4 +12,7 @@ public interface TestingResultRepository extends JpaRepository<TestingResult, Lo
 
     @Query("select a from TestingResults a where a.test.id = :testId and a.student.username = :username and a.status = :status")
     TestingResult findTestingResultByTestAndStudentAndStatus(@Param("testId") long testId, @Param("username") String username, @Param("status") int status);
+
+    @Query("select a from TestingResults a where a.test.id = :testId and a.student.username = :username")
+    TestingResult findByTestAndStudent(@Param("testId") long testId, @Param("username") String username);
 }

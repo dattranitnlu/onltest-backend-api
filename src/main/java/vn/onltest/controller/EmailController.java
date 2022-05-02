@@ -21,6 +21,7 @@ import java.io.IOException;
 public class EmailController {
     private final EmailForgotPassword emailForgotPassword;
 
+    @Deprecated
     @PostMapping("/sentEmail")
     public ResponseEntity<?> sendEmail() throws MessagingException, IOException {
 //        emailForgotPassword.sendEmail("Dat Tran", "www.google.com", "dattranitnlu@gmail.com");

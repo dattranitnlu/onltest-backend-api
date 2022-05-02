@@ -11,6 +11,7 @@ import vn.onltest.exception.ServiceException;
 import vn.onltest.exception.movie.NotFoundException;
 import vn.onltest.model.projection.TestingDetailListView;
 import vn.onltest.model.request.TestModelRequest;
+import vn.onltest.model.response.custom.TestingResultData;
 import vn.onltest.repository.*;
 import vn.onltest.service.TestService;
 import vn.onltest.service.UserService;
@@ -58,7 +59,7 @@ public class TestServiceImpl implements TestService {
             username = username.trim();
 
             Test local = localTest.get();
-            String randomTestCode = "";
+            String randomTestCode;
 //            int existedTest = testingResultRepository.countTestingResultByTestAndStudentAndStatus(testId, username, StatusConstant.ACTIVATION);
             TestingResult localTestingResult = testingResultRepository.findTestingResultByTestAndStudentAndStatus(testId, username, StatusConstant.ACTIVATION);
 
@@ -69,7 +70,7 @@ public class TestServiceImpl implements TestService {
 
                 Calendar date = Calendar.getInstance();
                 long timeInSecs = date.getTimeInMillis();
-                Date timeAfterAdding = new Date(timeInSecs + (local.getDuration() * 60 * 1000));
+                Date timeAfterAdding = new Date(timeInSecs + ((long) local.getDuration() * 60 * 1000));
                 testingResult.setFinishTime(timeAfterAdding);
 
                 // Random a test code for student
@@ -87,9 +88,7 @@ public class TestServiceImpl implements TestService {
                 localTestingResult = testingResultRepository.save(testingResult);
             }
 
-            Page<TestingDetailListView> result = testingDetailRepository.findAllByTestAndTestCode(local, localTestingResult.getTestCode(), pageable);
-
-            return result;
+            return testingDetailRepository.findAllByTestAndTestCode(local, localTestingResult.getTestCode(), pageable);
         } else {
             throw new NotFoundException(String.format(messages.getMessage("test.get.error.not-found", null, null), testId));
         }
@@ -158,6 +157,21 @@ public class TestServiceImpl implements TestService {
         }
     }
 
+    @Override
+    public TestingResultData getGradeOfStudentByStudentIdAndTestId(String username, long testId) {
+        TestingResult localTestingResult = testingResultRepository.findByTestAndStudent(testId, username);
+        if(localTestingResult != null) {
+            double totalGrade = answersSheetRepository.findTotalGradeByTestingResultId(localTestingResult.getId());
+            int correctAnswerNumber = answersSheetRepository.countCorrectAnswerNumberByTestingResultId(localTestingResult.getId());
+            int totalQuestionInTest = testingDetailRepository.countTotalQuestionByTestCodeAndTestId(localTestingResult.getTestCode(), testId);
+
+            return new TestingResultData(totalGrade, correctAnswerNumber, totalQuestionInTest);
+        } else {
+            throw new NotFoundException("Not found testing result");
+        }
+
+    }
+
     /**
      *  Getting existed answer in database
      *
@@ -168,7 +182,7 @@ public class TestServiceImpl implements TestService {
      * @param questionId: input to question
      */
     private AnswerSheet getExistedAnswerFromDatabase(long testResultId, long questionId) {
-        Optional<AnswerSheet> localAnswerSheet = answersSheetRepository.findByTestingResultAndAndQuestionAndOptionId(testResultId, questionId);
+        Optional<AnswerSheet> localAnswerSheet = answersSheetRepository.findByTestingResultAndQuestionAndOptionId(testResultId, questionId);
         return localAnswerSheet.isPresent() ? localAnswerSheet.get() : new AnswerSheet();
     }
 }

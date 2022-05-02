@@ -24,6 +24,7 @@ public class UtilsController {
     private final FilesStorageService filesStorageService;
     private final UserExcelService fileService;
 
+    @Deprecated
     // this is api for demo
     @PostMapping("uploadFile")
     public AbstractResponse uploadFile(@RequestPart MultipartFile file) throws IOException, NoSuchAlgorithmException, InvalidKeyException {

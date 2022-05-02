@@ -14,6 +14,7 @@ import vn.onltest.util.PathUtil;
 public class KafkaController {
     private final KafkaTemplate kafkaTemplate;
 
+    @Deprecated
     @GetMapping()
     public String sendMessage(@RequestParam(name = "message") String message) {
         kafkaTemplate.send("dresses", message);
