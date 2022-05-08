@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.onltest.model.entity.Test;
@@ -35,7 +34,6 @@ import java.util.List;
 @Api(tags = "Test")
 public class TestController {
     private final TestService testService;
-    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @ApiOperation(value = "Lấy danh sách bài kiểm tra", response = PagingResultResponse.class)
     @ApiResponses(value = {
@@ -112,8 +110,8 @@ public class TestController {
                                        @RequestParam long optionId) {
         testService.saveAnswer(principal.getName(), testId, questionId, optionId);
 //        SaveAnswerRequest request = new SaveAnswerRequest(principal.getName(), testId, questionId, optionId);
-
-//        kafkaTemplate.send("answer", request.toString());
+//
+//        kafkaProducerConfig.sendMessage(request);
         return new ResultMessageResponse(
                 HttpStatus.OK.value(), "Saved answer successfully");
     }

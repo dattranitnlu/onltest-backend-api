@@ -32,7 +32,7 @@ services:
       - KAFKA_ADVERTISED_HOST_NAME=localhost
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1, answer:1:1
+      - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1,answer:1:1
     volumes:
       - ../mount/kafka-data:/var/lib/kafka/data
     depends_on:
